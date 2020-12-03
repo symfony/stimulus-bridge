@@ -25,7 +25,7 @@ to build dynamic modules referencing vendor Stimulus controllers and styles.
 
 To use it, first configure Webpack Encore:
 
-```
+```javascript
 // webpack.config.js
 
 // Provide the location of your controllers.json file
@@ -34,7 +34,7 @@ Encore.enableStimulusBridge('./assets/controllers.json');
 
 Then use the package in your JavaScript code:
 
-```
+```javascript
 // app.js (or bootstrap.js if you use the standard Symfony structure)
 
 import { startStimulusApp } from '@symfony/stimulus-bridge';
