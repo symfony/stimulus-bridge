@@ -1,0 +1,36 @@
+{
+    "name": "@symfony/stimulus-bridge",
+    "description": "Stimulus integration bridge for Symfony projects",
+    "version": "0.0.1",
+    "main": "dist/index.js",
+    "license": "MIT",
+    "author": "Titouan Galopin <galopintitouan@gmail.com>",
+    "engines": {
+        "node": "^10.13.0 || >=12.0.0"
+    },
+    "scripts": {
+        "build": "babel src -d dist",
+        "test": "babel src -d dist && mocha --reporter spec test --recursive"
+    },
+    "peerDependencies": {
+        "stimulus": "^1.0"
+    },
+    "dependencies": {
+        "webpack-virtual-modules": "^0.3.2"
+    },
+    "devDependencies": {
+        "@symfony/mock-module": "file:test/fixtures/module",
+        "@babel/cli": "^7.12.1",
+        "@babel/core": "^7.12.3",
+        "@babel/plugin-proposal-class-properties": "^7.12.1",
+        "@babel/preset-env": "^7.12.7",
+        "chai": "^4.2.0",
+        "mocha": "^8.2.1",
+        "stimulus": "^1.0"
+    },
+    "files": [
+        "src/",
+        "dist/",
+        "webpack-helper.js"
+    ]
+}
