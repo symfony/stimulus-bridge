@@ -10,23 +10,28 @@
     },
     "scripts": {
         "build": "babel src -d dist",
-        "test": "babel src -d dist && mocha --reporter spec test --recursive"
+        "test": "babel src -d dist && jest"
     },
     "peerDependencies": {
-        "stimulus": "^1.0"
+        "stimulus": "^2.0"
     },
     "dependencies": {
         "webpack-virtual-modules": "^0.3.2"
     },
     "devDependencies": {
-        "@symfony/mock-module": "file:test/fixtures/module",
         "@babel/cli": "^7.12.1",
         "@babel/core": "^7.12.3",
         "@babel/plugin-proposal-class-properties": "^7.12.1",
         "@babel/preset-env": "^7.12.7",
-        "chai": "^4.2.0",
-        "mocha": "^8.2.1",
-        "stimulus": "^1.0"
+        "@symfony/mock-module": "file:test/fixtures/module",
+        "@symfony/stimulus-testing": "^1.0.0",
+        "stimulus": "^2.0"
+    },
+    "jest": {
+        "testRegex": "test/.*\\.test.js",
+        "setupFilesAfterEnv": [
+            "./test/setup.js"
+        ]
     },
     "files": [
         "src/",
