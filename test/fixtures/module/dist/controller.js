@@ -1,5 +1,3 @@
-const Controller = require('stimulus').Controller;
-
-module.exports = class extends Controller {
+module.exports = class {
     connect() {}
 };

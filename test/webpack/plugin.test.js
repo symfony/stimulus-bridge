@@ -9,13 +9,12 @@
 
 'use strict';
 
-const expect = require('chai').expect;
 const createStimulusBridgePlugin = require('../../dist/webpack/plugin');
 const VirtualModulesPlugin = require('webpack-virtual-modules');
 
 describe('createStimulusBridgePlugin', () => {
     it('must return created VirtualModule plugin', () => {
         const config = require('../fixtures/empty.json');
-        expect(createStimulusBridgePlugin(config)).to.be.an.instanceof(VirtualModulesPlugin);
+        expect(createStimulusBridgePlugin(config)).toBeInstanceOf(VirtualModulesPlugin);
     });
 });
