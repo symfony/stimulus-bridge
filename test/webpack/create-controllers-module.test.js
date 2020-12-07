@@ -15,14 +15,14 @@ describe('createControllersVirtualModule', () => {
     describe('empty.json', () => {
         it('must return an empty file', () => {
             const config = require('../fixtures/empty.json');
-            expect(createControllersVirtualModule(config)).toEqual('module.exports = {\n};');
+            expect(createControllersVirtualModule(config)).toEqual('export default {\n};');
         });
     });
 
     describe('disabled-controller.json', () => {
         it('must return an empty file', () => {
             const config = require('../fixtures/disabled-controller.json');
-            expect(createControllersVirtualModule(config)).toEqual('module.exports = {\n};');
+            expect(createControllersVirtualModule(config)).toEqual('export default {\n};');
         });
     });
 
@@ -30,7 +30,7 @@ describe('createControllersVirtualModule', () => {
         it('must return an empty file', () => {
             const config = require('../fixtures/disabled-autoimport.json');
             expect(createControllersVirtualModule(config)).toEqual(
-                "module.exports = {\n  '@symfony/mock-module/mock': import(/* webpackMode: \"lazy\" */ '@symfony/mock-module/dist/controller.js'),\n};"
+                "export default {\n  '@symfony/mock-module/mock': import(/* webpackMode: \"lazy\" */ '@symfony/mock-module/dist/controller.js'),\n};"
             );
         });
     });
@@ -39,7 +39,7 @@ describe('createControllersVirtualModule', () => {
         it('must return an empty file', () => {
             const config = require('../fixtures/eager-no-autoimport.json');
             expect(createControllersVirtualModule(config)).toEqual(
-                "module.exports = {\n  '@symfony/mock-module/mock': import(/* webpackMode: \"eager\" */ '@symfony/mock-module/dist/controller.js'),\n};"
+                "export default {\n  '@symfony/mock-module/mock': import(/* webpackMode: \"eager\" */ '@symfony/mock-module/dist/controller.js'),\n};"
             );
         });
     });
@@ -48,7 +48,7 @@ describe('createControllersVirtualModule', () => {
         it('must return a file with the enabled controller', () => {
             const config = require('../fixtures/lazy-autoimport.json');
             expect(createControllersVirtualModule(config)).toEqual(
-                "module.exports = {\n  '@symfony/mock-module/mock': import(/* webpackMode: \"lazy\" */ '@symfony/mock-module/dist/controller.js'),\n};"
+                "export default {\n  '@symfony/mock-module/mock': import(/* webpackMode: \"lazy\" */ '@symfony/mock-module/dist/controller.js'),\n};"
             );
         });
     });
