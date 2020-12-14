@@ -23,6 +23,7 @@ export function startStimulusApp(context) {
         }
 
         symfonyControllers[controllerName].then((module) => {
+            controllerName = controllerName.replace('/', '--');
             application.register(controllerName, module.default);
         });
     }
