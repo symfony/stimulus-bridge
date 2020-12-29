@@ -13,10 +13,10 @@
         "test": "webpack --config test/webpack.config.js && jest"
     },
     "peerDependencies": {
+        "@babel/plugin-proposal-class-properties": "^7.0",
         "stimulus": "^2.0"
     },
     "dependencies": {
-        "@babel/plugin-proposal-class-properties": "^7.12.1",
         "webpack-virtual-modules": "^0.3.2"
     },
     "devDependencies": {
