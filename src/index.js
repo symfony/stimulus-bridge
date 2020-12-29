@@ -26,6 +26,9 @@ export function startStimulusApp(context) {
         }
 
         symfonyControllers[controllerName].then((module) => {
+            // Normalize the controller name: remove the initial @ and use Stimulus format
+            controllerName = controllerName.substr(1).replace(/_/g, "-").replace(/\//g, "--");
+
             application.register(controllerName, module.default);
         });
     }
