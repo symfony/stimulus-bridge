@@ -9,7 +9,7 @@
 'use strict';
 
 module.exports = function createControllersVirtualModule(config) {
-  var file = 'module.exports = {';
+  var file = 'export default {';
 
   if ('undefined' === typeof config['controllers']) {
     throw new Error('Your Stimulus configuration file (assets/controllers.json) lacks a "controllers" key.');

@@ -10,7 +10,7 @@
     },
     "scripts": {
         "build": "babel src -d dist",
-        "test": "babel src -d dist && jest"
+        "test": "webpack --config test/webpack.config.js && jest"
     },
     "peerDependencies": {
         "stimulus": "^2.0"
@@ -24,9 +24,12 @@
         "@babel/core": "^7.12.3",
         "@babel/plugin-proposal-class-properties": "^7.12.1",
         "@babel/preset-env": "^7.12.7",
+        "@symfony/controllers": "file:test/fixtures/controllers",
         "@symfony/mock-module": "file:test/fixtures/module",
         "@symfony/stimulus-testing": "^1.0.0",
-        "stimulus": "^2.0"
+        "stimulus": "^2.0",
+        "webpack": "^5.11.1",
+        "webpack-cli": "^4.3.0"
     },
     "jest": {
         "testRegex": "test/.*\\.test.js",

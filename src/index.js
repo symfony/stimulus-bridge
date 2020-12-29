@@ -15,7 +15,10 @@ import symfonyControllers from '@symfony/controllers';
 
 export function startStimulusApp(context) {
     const application = Application.start();
-    application.load(definitionsFromContext(context));
+
+    if (context) {
+        application.load(definitionsFromContext(context));
+    }
 
     for (let controllerName in symfonyControllers) {
         if (!symfonyControllers.hasOwnProperty(controllerName)) {

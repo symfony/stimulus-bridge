@@ -1,6 +1,5 @@
 {
     "name": "@symfony/mock-module",
-    "license": "MIT",
     "version": "1.0.0",
     "symfony": {
         "controllers": {
