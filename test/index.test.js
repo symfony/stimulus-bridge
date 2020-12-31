@@ -19,6 +19,6 @@ describe('startStimulusApp', () => {
         await new Promise(setImmediate);
 
         expect(app.router.modules.length).toBe(1);
-        expect(app.router.modules[0].definition.identifier).toBe('@symfony/mock-module/mock-controller');
+        expect(app.router.modules[0].definition.identifier).toBe('symfony--mock-module--mock-controller');
     });
 });
