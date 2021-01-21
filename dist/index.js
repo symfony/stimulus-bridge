@@ -24,16 +24,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 function startStimulusApp(context) {
   var application = _stimulus.Application.start();
 
-  application.load((0, _webpackHelpers.definitionsFromContext)(context));
+  if (context) {
+    application.load((0, _webpackHelpers.definitionsFromContext)(context));
+  }
 
-  var _loop = function _loop(controllerName) {
-    if (!_controllers["default"].hasOwnProperty(controllerName)) {
+  var _loop = function _loop(_controllerName) {
+    if (!_controllers["default"].hasOwnProperty(_controllerName)) {
+      controllerName = _controllerName;
       return "continue";
     }
 
-    _controllers["default"][controllerName].then(function (module) {
-      application.register(controllerName, module["default"]);
+    _controllers["default"][_controllerName].then(function (module) {
+      // Normalize the controller name: remove the initial @ and use Stimulus format
+      _controllerName = _controllerName.substr(1).replace(/_/g, "-").replace(/\//g, "--");
+      application.register(_controllerName, module["default"]);
     });
+
+    controllerName = _controllerName;
   };
 
   for (var controllerName in _controllers["default"]) {
