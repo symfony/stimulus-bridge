@@ -9,8 +9,15 @@
 
 'use strict';
 
-module.exports = function createControllersVirtualModule(config) {
-    let file = 'export default {';
+module.exports = function createControllersModule(config) {
+    let controllerContents = 'export default {';
+    let autoImportContents = '';
+
+    if ('undefined' !== typeof config['placeholder']) {
+        throw new Error(
+            'Your controllers.json file was not found. Be sure to add a Webpack alias from "@symfony/stimulus-bridge/controllers.json" to *your* controllers.json file.'
+        );
+    }
 
     if ('undefined' === typeof config['controllers']) {
         throw new Error('Your Stimulus configuration file (assets/controllers.json) lacks a "controllers" key.');
@@ -39,7 +46,7 @@ module.exports = function createControllersVirtualModule(config) {
             const controllerMain = packageName + '/' + controllerPackageConfig.main;
             const webpackMode = controllerUserConfig.webpackMode;
 
-            file +=
+            controllerContents +=
                 "\n  '" +
                 controllerReference +
                 '\': import(/* webpackMode: "' +
@@ -47,8 +54,14 @@ module.exports = function createControllersVirtualModule(config) {
                 '" */ \'' +
                 controllerMain +
                 "'),";
+
+            for (let autoimport in controllerUserConfig.autoimport || []) {
+                if (controllerUserConfig.autoimport[autoimport]) {
+                    autoImportContents += "import '" + autoimport + "';\n";
+                }
+            }
         }
     }
 
-    return file + '\n};';
+    return `${autoImportContents}${controllerContents}\n};`;
 };

@@ -17,10 +17,12 @@ var _stimulus = require("stimulus");
 
 var _webpackHelpers = require("stimulus/webpack-helpers");
 
-var _controllers = _interopRequireDefault(require("@symfony/controllers"));
+var _controllers = _interopRequireDefault(require("./webpack/loader!@symfony/stimulus-bridge/controllers.json"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+// The @symfony/stimulus-bridge/controllers.json should be changed
+// to point to the real controllers.json file via a Webpack alias
 function startStimulusApp(context) {
   var application = _stimulus.Application.start();
 
@@ -36,7 +38,7 @@ function startStimulusApp(context) {
 
     _controllers["default"][_controllerName].then(function (module) {
       // Normalize the controller name: remove the initial @ and use Stimulus format
-      _controllerName = _controllerName.substr(1).replace(/_/g, "-").replace(/\//g, "--");
+      _controllerName = _controllerName.substr(1).replace(/_/g, '-').replace(/\//g, '--');
       application.register(_controllerName, module["default"]);
     });
 

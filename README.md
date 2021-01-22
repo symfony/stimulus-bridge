@@ -20,9 +20,6 @@ yarn add @symfony/stimulus-bridge
 
 ## Usage
 
-This package relies on [webpack-virtual-modules](https://github.com/sysgears/webpack-virtual-modules)
-to build dynamic modules referencing vendor Stimulus controllers and styles.
-
 To use it, first configure Webpack Encore:
 
 ```javascript
@@ -38,9 +35,22 @@ Then use the package in your JavaScript code:
 // app.js (or bootstrap.js if you use the standard Symfony structure)
 
 import { startStimulusApp } from '@symfony/stimulus-bridge';
-import '@symfony/autoimport';
 
 export const app = startStimulusApp(require.context('./controllers', true, /\.(j|t)sx?$/));
+```
+
+If you get this error:
+
+> ./assets/bootstrap.js contains a reference to the file @symfony/autoimport.
+> This file can not be found.
+
+Remove the following line in the mentioned file: it's not needed anymore:
+
+```diff
+// assets/bootstrap.js
+
+// ...
+- import '@symfony/autoimport';
 ```
 
 ## Run tests

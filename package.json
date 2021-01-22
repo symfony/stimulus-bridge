@@ -16,15 +16,13 @@
         "stimulus": "^2.0"
     },
     "dependencies": {
-        "@babel/plugin-proposal-class-properties": "^7.12.1",
-        "webpack-virtual-modules": "^0.3.2"
+        "@babel/plugin-proposal-class-properties": "^7.12.1"
     },
     "devDependencies": {
         "@babel/cli": "^7.12.1",
         "@babel/core": "^7.12.3",
         "@babel/plugin-proposal-class-properties": "^7.12.1",
         "@babel/preset-env": "^7.12.7",
-        "@symfony/controllers": "file:test/fixtures/controllers",
         "@symfony/mock-module": "file:test/fixtures/module",
         "@symfony/stimulus-testing": "^1.0.0",
         "stimulus": "^2.0",
@@ -40,6 +38,7 @@
     "files": [
         "src/",
         "dist/",
-        "webpack-helper.js"
+        "webpack-helper.js",
+        "controllers.json"
     ]
 }
