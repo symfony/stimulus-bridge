@@ -9,9 +9,13 @@
 
 'use strict';
 
+const generateLazyController = require('./generate-lazy-controller');
+
 module.exports = function createControllersModule(config) {
     let controllerContents = 'export default {';
     let autoImportContents = '';
+    let hasLazyControllers = false;
+    const deprecations = [];
 
     if ('undefined' !== typeof config['placeholder']) {
         throw new Error(
@@ -28,6 +32,8 @@ module.exports = function createControllersModule(config) {
 
         for (let controllerName in config.controllers[packageName]) {
             const controllerReference = packageName + '/' + controllerName;
+            // Normalize the controller name: remove the initial @ and use Stimulus format
+            const controllerNormalizedName = controllerReference.substr(1).replace(/_/g, '-').replace(/\//g, '--');
 
             // Find package config for the controller
             if ('undefined' === typeof packageConfig.symfony.controllers[controllerName]) {
@@ -44,16 +50,35 @@ module.exports = function createControllersModule(config) {
             }
 
             const controllerMain = packageName + '/' + controllerPackageConfig.main;
-            const webpackMode = controllerUserConfig.webpackMode;
+            let fetchMode = 'eager';
 
-            controllerContents +=
-                "\n  '" +
-                controllerReference +
-                '\': import(/* webpackMode: "' +
-                webpackMode +
-                '" */ \'' +
-                controllerMain +
-                "'),";
+            if ('undefined' !== typeof controllerUserConfig.webpackMode) {
+                deprecations.push(
+                    'The "webpackMode" config key is deprecated in controllers.json. Use "fetch" instead, set to either "eager" or "lazy".'
+                );
+            }
+
+            if ('undefined' !== typeof controllerUserConfig.fetch) {
+                if (!['eager', 'lazy'].includes(controllerUserConfig.fetch)) {
+                    throw new Error(
+                        `Invalid "fetch" value "${controllerUserConfig.fetch}" in controllers.json. Expected "eager" or "lazy".`
+                    );
+                }
+
+                fetchMode = controllerUserConfig.fetch;
+            }
+
+            let moduleValueContents = `import(/* webpackMode: "eager" */ '${controllerMain}')`;
+            if (fetchMode === 'lazy') {
+                hasLazyControllers = true;
+                moduleValueContents = `
+new Promise((resolve, reject) => resolve({ default:
+${generateLazyController(controllerMain, 6)}
+  }))
+                `.trim();
+            }
+
+            controllerContents += `\n  '${controllerNormalizedName}': ${moduleValueContents},`;
 
             for (let autoimport in controllerUserConfig.autoimport || []) {
                 if (controllerUserConfig.autoimport[autoimport]) {
@@ -63,5 +88,12 @@ module.exports = function createControllersModule(config) {
         }
     }
 
-    return `${autoImportContents}${controllerContents}\n};`;
+    if (hasLazyControllers) {
+        controllerContents = `import { Controller } from 'stimulus';\n${controllerContents}`;
+    }
+
+    return {
+        finalSource: `${autoImportContents}${controllerContents}\n};`,
+        deprecations,
+    };
 };

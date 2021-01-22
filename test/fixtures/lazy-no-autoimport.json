@@ -2,7 +2,7 @@
     "controllers": {
         "@symfony/mock-module": {
             "mock": {
-                "fetch": "eager",
+                "fetch": "lazy",
                 "enabled": true
             }
         }

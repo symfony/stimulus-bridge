@@ -30,19 +30,14 @@ function startStimulusApp(context) {
     application.load((0, _webpackHelpers.definitionsFromContext)(context));
   }
 
-  var _loop = function _loop(_controllerName) {
-    if (!_controllers["default"].hasOwnProperty(_controllerName)) {
-      controllerName = _controllerName;
+  var _loop = function _loop(controllerName) {
+    if (!_controllers["default"].hasOwnProperty(controllerName)) {
       return "continue";
     }
 
-    _controllers["default"][_controllerName].then(function (module) {
-      // Normalize the controller name: remove the initial @ and use Stimulus format
-      _controllerName = _controllerName.substr(1).replace(/_/g, '-').replace(/\//g, '--');
-      application.register(_controllerName, module["default"]);
+    _controllers["default"][controllerName].then(function (module) {
+      application.register(controllerName, module["default"]);
     });
-
-    controllerName = _controllerName;
   };
 
   for (var controllerName in _controllers["default"]) {
