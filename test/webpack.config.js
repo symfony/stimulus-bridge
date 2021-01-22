@@ -24,6 +24,11 @@ module.exports = {
     output: {
         filename: 'index.js',
         path: path.resolve(__dirname, 'dist'),
-        libraryTarget: 'commonjs2'
+        libraryTarget: 'commonjs2',
+    },
+    resolve: {
+        alias: {
+            '@symfony/stimulus-bridge/controllers.json': path.resolve(__dirname, './controllers.json'),
+        },
     },
 };

@@ -8,15 +8,13 @@
  */
 'use strict';
 
-var VirtualModulesPlugin = require('webpack-virtual-modules');
+var webpack = require('webpack');
 
-var createAutoimportVirtualModule = require('./create-autoimport-module');
+module.exports = function createStimulusBridgePlugin(controllersJsonPath) {
+  return new webpack.NormalModuleReplacementPlugin(/stimulus-bridge\/controllers-placeholder\.json$/, function (resource) {
+    // controls how the import string will be parsed, includes loader
+    resource.request = "./webpack/loader!".concat(controllersJsonPath); // controls the physical file that will be read
 
-var createControllersVirtualModule = require('./create-controllers-module');
-
-module.exports = function createStimulusBridgePlugin(config) {
-  return new VirtualModulesPlugin({
-    'node_modules/@symfony/autoimport.js': createAutoimportVirtualModule(config),
-    'node_modules/@symfony/controllers.js': createControllersVirtualModule(config)
+    resource.createData.resource = controllersJsonPath;
   });
 };

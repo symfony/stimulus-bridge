@@ -11,7 +11,10 @@
 
 import { Application } from 'stimulus';
 import { definitionsFromContext } from 'stimulus/webpack-helpers';
-import symfonyControllers from '@symfony/controllers';
+
+// The @symfony/stimulus-bridge/controllers.json should be changed
+// to point to the real controllers.json file via a Webpack alias
+import symfonyControllers from './webpack/loader!@symfony/stimulus-bridge/controllers.json';
 
 export function startStimulusApp(context) {
     const application = Application.start();
@@ -27,7 +30,7 @@ export function startStimulusApp(context) {
 
         symfonyControllers[controllerName].then((module) => {
             // Normalize the controller name: remove the initial @ and use Stimulus format
-            controllerName = controllerName.substr(1).replace(/_/g, "-").replace(/\//g, "--");
+            controllerName = controllerName.substr(1).replace(/_/g, '-').replace(/\//g, '--');
 
             application.register(controllerName, module.default);
         });

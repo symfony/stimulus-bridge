@@ -1,0 +1,11 @@
+{
+    "controllers": {
+        "@symfony/mock-module": {
+            "mock": {
+                "webpackMode": "eager",
+                "enabled": true
+            }
+        }
+    },
+    "entrypoints": []
+}
