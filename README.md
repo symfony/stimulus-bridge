@@ -39,6 +39,8 @@ import { startStimulusApp } from '@symfony/stimulus-bridge';
 export const app = startStimulusApp(require.context('./controllers', true, /\.(j|t)sx?$/));
 ```
 
+## Common Errors
+
 If you get this error:
 
 > ./assets/bootstrap.js contains a reference to the file @symfony/autoimport.
@@ -52,6 +54,12 @@ Remove the following line in the mentioned file: it's not needed anymore:
 // ...
 - import '@symfony/autoimport';
 ```
+
+If you get the error:
+
+> Cannot find module '@symfony/stimulus-bridge/webpack-helper'
+
+Be sure to upgrade to `@symfony/webpack-encore` version 1.0.0 or higher.
 
 ## Run tests
 
