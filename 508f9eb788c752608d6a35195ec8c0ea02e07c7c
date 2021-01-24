@@ -1,0 +1,78 @@
+---------------------------------------------------------------------------
+
+by chapterjason at 2020-12-11T22:47:14Z
+
+@tgalopin Yes I tested this with yarn link and with yarn pack.
+
+Could be that the user needs to install `@types/webpack-env`, not sure what would be the best way, cause it will not be installed as a devDependency.
+
+But I think it should be added as kind of documentation somewhere cause of the use from `require.context` it will say:
+```
+[tsl] ERROR in /[...]/assets/bootstrap.ts(5,45)
+      TS2339: Property 'context' does not exist on type 'NodeRequire'.
+```
+
+With `@types/webpack-env` this error will not occur.
+
+---------------------------------------------------------------------------
+
+by tgalopin at 2020-12-11T23:02:34Z
+
+Wouldn't it make sense to provide a type package for stimulus-bridge that provide the types.d.ts file and include the webpack types?
+
+---------------------------------------------------------------------------
+
+by chapterjason at 2020-12-12T10:10:47Z
+
+@tgalopin You are right, not thought about it at all.
+
+---------------------------------------------------------------------------
+
+by tgalopin at 2020-12-12T13:22:42Z
+
+I think it's not worth creating an additional GitHub repo for this. What do you think of creating a `types` directory in this repository with a package.json inside and the types declaration? Would it make sense?
+
+@weaverryan do you have an opinion about this?
+
+---------------------------------------------------------------------------
+
+by chapterjason at 2020-12-12T19:01:34Z
+
+@tgalopin sounds good, also thought about some type tests. https://github.com/Microsoft/dtslint
+
+---------------------------------------------------------------------------
+
+by chapterjason at 2020-12-28T20:36:02Z
+
+@tgalopin
+I took a look into the idea with a separate directory and testing.
+
+Testing with dtslint too much overhead for this simple function that I would like to leave it out. A *contributing* documentation would be nice to mention that when changes are made the typing must be checked and adjusted.
+
+For the dependency of the `@types/webpack-env` and own directory I took a look into the [documentation \(> dependencies)](https://www.typescriptlang.org/docs/handbook/declaration-files/publishing.html#dependencies).
+
+>
+> All dependencies are managed by npm. Make sure all the declaration packages you depend on are marked appropriately in the "dependencies" section in your package.json. For example, imagine we authored a package that used Browserify and TypeScript.
+>
+
+Based on the documentation it would be okay to add the dependency, it has no disadvantages for non TypeScript users.
+
+---------------------------------------------------------------------------
+
+by tgalopin at 2020-12-29T17:19:19Z
+
+It has the disadvantage of including Webpack types on every machine without any use for non TS users. IMO the node_modules dir is already big enough, we should avoid adding direct dependencies for people who won't use it.
+
+That's why I thought a `types` directory could be better: it would allow us to have a different module for both the bridge and Webpack types, allowing people to install it easily only when they need it. WDYT?
+
+---------------------------------------------------------------------------
+
+by chapterjason at 2020-12-29T17:35:32Z
+
+@tgalopin Any suggestion for the package name?
+
+---------------------------------------------------------------------------
+
+by tgalopin at 2020-12-29T17:42:28Z
+
+`@symfony-types/stimulus-bridge` ?
