@@ -1,0 +1,18 @@
+name: Symfony UX - Verify build
+
+on: [push, pull_request]
+
+jobs:
+    verify:
+        name: Check For Uncomitted Changes
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Build
+              run: |
+                  yarn install
+                  yarn run build
+            - name: Check Git Status
+              run: |
+                  status="$(git status --short)"
+                  [ -z "$status" ]
