@@ -11,6 +11,6 @@ import { Application } from "stimulus";
 
 declare module "@symfony/stimulus-bridge" {
 
-    export function startStimulusApp(context: __WebpackModuleApi.RequireContext): Application;
+    export function startStimulusApp(context?: __WebpackModuleApi.RequireContext): Application;
 
 }
