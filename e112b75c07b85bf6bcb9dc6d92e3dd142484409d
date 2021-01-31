@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------
+
+by tgalopin at 2021-01-23T15:21:56Z
+
+Hum, I'm not sure, as it's used in the recipe
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2021-01-23T15:31:24Z
+
+LOL. So THAT is how/why this works out-of-the-box 🤦
+
+Here's what I think we should do:
+
+A) Remove this as a dependency here. It is not really a dependency
+B) In Encore, we bump the dependency to require `@babel/preset-env` at least 7.10
+
+... and that's all. The plugin would still be added directly in the user's project in webpack.config.js and it would be present thanks to `preset-env`.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2021-01-26T15:24:24Z
+
+This was closed unintentionally - my bad!
+
+---------------------------------------------------------------------------
+
+by tgalopin at 2021-01-26T20:25:12Z
+
+Should we update the recipe before doing that?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2021-01-27T16:00:13Z
+
+@tgalopin I decided not to put the package into the recipe, but just to make sure that it's available indirectly via Encore - in symfony/webpack-encore#889
+
+The tl;dr is this:
+
+A) If you're using Encore today, you probably already have this package. You only don't if you have a bit of an older version of `@babel/preset-env`
+B) If you're using Encore 1.0, then you will DEFINITELY have it because of symfony/webpack-encore#889
+
+We don't have a release of stimulus-bridge yet that includes the `@babel/plugin-proposal-class-properties`. My vote is to remove it before we ever have a release. And if people get an error that the package is missing (because they are in the edge-case situation), then the fix is for them to install the package or upgrade `@babel/preset-env`. Either way, the dependency should not be here.
+
+Thanks!
