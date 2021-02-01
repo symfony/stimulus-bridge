@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by tgalopin at 2021-01-24T20:16:07Z
+
+Could you rebase?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2021-01-27T16:41:03Z
+
+I've updated the PR to use a `fetch` option that allows `eager` or `lazy`. The old `webpackMode` is still accepted, but it is ignored (and triggers a deprecation warning to guide users). We're still experimental, so we don't need to do this - but it was a simple thing to help guide users.
