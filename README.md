@@ -190,6 +190,37 @@ ordered from least to most lazy:
   separate file and only downloaded asynchronously if (and when) the `data-controller`
   HTML appears on the page.
 
+## Lazy Controllers
+
+You can also make your own controllers "lazy": giving them the same behavior
+as the `lazy-controller` explained above. In this case, your controller isn't
+downloaded until an element for that controller first appears on the page.
+
+To activate this, first make sure that you're using the special loader -
+`@symfony/stimulus-bridge/lazy-controller-loader` - when loading your controllers:
+
+```js
+// assets/bootstrap.js
+
+export const app = startStimulusApp(require.context(
+    '@symfony/stimulus-bridge/lazy-controller-loader!./controllers',
+    true,
+    /\.(j|t)sx?$/
+));
+```
+
+Next, you can make any controllers lazy by adding a `/* stimulusFetch: 'lazy' */`
+comment above that controller:
+
+```js
+import { Controller } from 'stimulus';
+
+/* stimulusFetch: 'lazy' */
+export default class extends Controller {
+    // ...
+}
+```
+
 ## Run tests
 
 ```sh

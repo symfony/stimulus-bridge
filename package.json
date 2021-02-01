@@ -15,7 +15,9 @@
     "peerDependencies": {
         "stimulus": "^2.0"
     },
-    "dependencies": {},
+    "dependencies": {
+        "acorn": "^8.0.5"
+    },
     "devDependencies": {
         "@babel/cli": "^7.12.1",
         "@babel/core": "^7.12.3",
@@ -35,6 +37,7 @@
     "files": [
         "src/",
         "dist/",
-        "controllers.json"
+        "controllers.json",
+        "lazy-controller-loader.js"
     ]
 }

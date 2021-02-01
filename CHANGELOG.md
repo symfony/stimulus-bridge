@@ -15,8 +15,10 @@
   in `controllers.json` to `lazy`, your controller will not
   be downloaded until the controller element first appears on the page.
 
-* The `webpackMode` option in `controllers.json` was deprecated. Use
-  the new `fetch` option instead.
+* Support for making your own controllers "lazy" (as described above)
+  can now be achieved by loading your controllers through the
+  `@symfony/stimulus-bridge/lazy-controller-loader` loader and
+  adding a `/* stimulusFetch: 'lazy' */` comment above your controller.
 
 ## 1.1.0
 
