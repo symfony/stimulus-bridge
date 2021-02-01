@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by tgalopin at 2021-01-26T20:26:40Z
+
+People use a lot the `'use strict';` syntax to declare strictness. Would it make sense to have `'use lazy';` as a notation instead of a comment?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2021-01-26T21:45:28Z
+
+I don’t know! I’ll admit that this is the weirdest part - I’m inventing something. However, comments can be removed in the final, minimized code, which is perfect because the comments are there only to hint to the compiler. So in some ways, it seems more appropriate (though in theory we could find and remove the “use lazy”). And also, I think it would be harder to parse for that string - the comments thing was easy.
+
+If we feel strongly about the change, I can try it. But we *do* have a mechanism to deprecate the comment later if we don’t like it: we just parse for it in the loader and logger a deprecation. So it’s changeable.
+
+---------------------------------------------------------------------------
+
+by tgalopin at 2021-01-31T20:23:52Z
+
+After thinking about it I do agree the comment is the most suited option. I'm not sure how it would work with Typescript though: would it be removed by ts-loader before webpack can read it?
+
+(+ needs rebase)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2021-02-01T00:50:27Z
+
+> I'm not sure how it would work with Typescript though: would it be removed by ts-loader before webpack can read it?
+
+It appears to work fine with Typescript - even in a production/minified build. I expected this - since we're using the same mechanism that Webpack uses - but I just tried it locally on a project.
