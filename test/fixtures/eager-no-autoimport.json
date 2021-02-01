@@ -2,7 +2,7 @@
     "controllers": {
         "@symfony/mock-module": {
             "mock": {
-                "webpackMode": "eager",
+                "fetch": "eager",
                 "enabled": true
             }
         }

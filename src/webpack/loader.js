@@ -1,6 +1,28 @@
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+'use strict';
+
 const LoaderDependency = require('webpack/lib/dependencies/LoaderDependency');
 const createControllersModule = require('./create-controllers-module');
 
+/**
+ * Loader that processes the controllers.json file.
+ *
+ * This reads the controllers key and returns an object
+ * where the keys are each controller name and the value
+ * is the module name (or inline class for lazy controllers)
+ * for that controller.
+ *
+ * @param {string} source controllers.json source
+ * @return {string}
+ */
 module.exports = function (source) {
     const logger = this.getLogger('stimulus-bridge-loader');
 
@@ -18,5 +40,11 @@ module.exports = function (source) {
     this._module.parser = factory.getParser(requiredType);
     /* End workaround */
 
-    return createControllersModule(JSON.parse(source));
+    const { finalSource, deprecations } = createControllersModule(JSON.parse(source));
+
+    deprecations.forEach((message) => {
+        this.emitWarning(new Error(message));
+    });
+
+    return finalSource;
 };

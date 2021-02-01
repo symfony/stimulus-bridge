@@ -152,6 +152,44 @@ If you get the error:
 
 Be sure to upgrade to `@symfony/webpack-encore` version 1.0.0 or higher.
 
+## The controllers.json File
+
+The bridge works by reading a `controllers.json` file that is automatically
+updated by Symfony Flex whenever you download a UX-powered package. For
+example, after running `composer require symfony/ux-dropzone`, it will
+look like this:
+
+```json
+{
+    "controllers": {
+        "@symfony/ux-dropzone": {
+            "dropzone": {
+                "enabled": true,
+                "fetch": "eager",
+                "autoimport": {
+                    "@symfony/ux-dropzone/src/style.css": true
+                }
+            }
+        }
+    },
+    "entrypoints": []
+}
+```
+
+Each item under `controllers` will cause a Stimulus controller to be
+registered with a specific name - in this case the controller would
+be called `symfony--ux-dropzone--dropzone` (the `/` becomes `--`).
+
+By default, the new controller will always be included in your
+JavaScript package. You can control that with the `fetch` option,
+ordered from least to most lazy:
+
+* `fetch: 'eager'`: controller & dependencies are included in the JavaScript
+  that's downloaded when the page is loaded.
+* `fetch: 'lazy'`: controller & dependencies are isolated into a
+  separate file and only downloaded asynchronously if (and when) the `data-controller`
+  HTML appears on the page.
+
 ## Run tests
 
 ```sh
