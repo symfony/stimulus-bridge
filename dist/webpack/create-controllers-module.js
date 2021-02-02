@@ -25,7 +25,13 @@ module.exports = function createControllersModule(config) {
   }
 
   for (var packageName in config.controllers) {
-    var packageConfig = require(packageName + '/package.json');
+    var packageConfig = void 0;
+
+    try {
+      packageConfig = require(packageName + '/package.json');
+    } catch (e) {
+      throw new Error("The file \"".concat(packageName, "/package.json\" could not be found. Try running \"yarn install --force\"."));
+    }
 
     for (var controllerName in config.controllers[packageName]) {
       var controllerReference = packageName + '/' + controllerName; // Normalize the controller name: remove the initial @ and use Stimulus format
