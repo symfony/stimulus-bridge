@@ -74,6 +74,7 @@ export default {
   'symfony--mock-module--mock': new Promise((resolve, reject) => resolve({ default:
       (function() {
           function LazyController(context) {
+              this.__stimulusLazyController = true;
               Controller.call(this, context);
           }
           LazyController.prototype = Object.create(Controller && Controller.prototype, {
@@ -82,6 +83,11 @@ export default {
           Object.setPrototypeOf(LazyController, Controller);
           LazyController.prototype.initialize = function() {
               var _this = this;
+              if (this.application.controllers.find(function(controller) {
+                  return controller.identifier === _this.identifier && controller.__stimulusLazyController;
+              })) {
+                  return;
+              }
               import('@symfony/mock-module/dist/controller.js').then(function(controller) {
                   _this.application.register(_this.identifier, controller.default);
               });
