@@ -31,5 +31,26 @@ describe('generateLazyControllerModule', () => {
             // if all goes correctly, the prototype should have a Controller key
             expect(Object.getPrototypeOf(lazyControllerClass)).toHaveProperty('Controller');
         });
+
+        it('must return a functional ES5 class on Windows', () => {
+            const controllerCode =
+                "const Controller = require('stimulus');\n" +
+                // this, for some reason, is undefined in a test but populated in a real situation
+                // this avoid an explosion since it is undefined here
+                'Controller.prototype = {};\n' +
+                generateLazyController('C:\\\\path\\to\\file.js');
+            const result = babelParser.parse(controllerCode, {
+                sourceType: 'module',
+            });
+            expect(babelTypes.isNode(result)).toBeTruthy();
+            /*
+             * This looks insane. We're creating a string that looks like this:
+             *      C:\\\\path\\to\\file.js
+             *
+             * We want to make sure that in the final written file, each "\"
+             * is escaped properly.
+             */
+            expect(controllerCode).toContain(`import('C:\\\\\\\\path\\\\to\\\\file.js')`);
+        });
     });
 });
