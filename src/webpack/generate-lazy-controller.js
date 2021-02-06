@@ -27,7 +27,7 @@ ${spaces}    });
 ${spaces}    Object.setPrototypeOf(LazyController, Controller);
 ${spaces}    LazyController.prototype.initialize = function() {
 ${spaces}        var _this = this;
-${spaces}        import('${controllerPath}').then(function(controller) {
+${spaces}        import('${controllerPath.replace(/\\/g, '\\\\')}').then(function(controller) {
 ${spaces}            _this.application.register(_this.identifier, controller.default);
 ${spaces}        });
 ${spaces}    }
