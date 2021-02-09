@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2.0.0
+
+Following the release of Webpack Encore 1.0, this release adapts the stimulus-bridge to Webpack 5
+features.
+
+Read the blog post on https://symfony.com/blog/webpack-encore-1-0-and-stimulus-bridge-2-0-released
+for details.
+
 ## 1.2.0
 
 * Webpack integration with this library has changed. If you're using
