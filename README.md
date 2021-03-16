@@ -127,8 +127,8 @@ the source will update to:
 </div>
 ```
 
-If the controller is in subdirectories `assets/controllers/blog/post/author_controller.js`,
-it will follows an other naming convention:
+If the controller lives in a subdirectory - like `assets/controllers/blog/post/author_controller.js` -
+the name will include `--` in place of each `/`:
 
 ```html
 <div data-controller="blog--post--author">
