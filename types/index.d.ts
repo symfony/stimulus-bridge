@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import { Application } from "stimulus";
-
 declare module "@symfony/stimulus-bridge" {
+
+    import { Application } from "stimulus";
 
     export function startStimulusApp(context?: __WebpackModuleApi.RequireContext): Application;
 
