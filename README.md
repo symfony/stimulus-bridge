@@ -127,6 +127,15 @@ the source will update to:
 </div>
 ```
 
+If the controller is in subdirectories `assets/controllers/blog/post/author_controller.js`,
+it will follows an other naming convention:
+
+```html
+<div data-controller="blog--post--author">
+    <div data-blog--post--author-target="author">...</div>
+</div>
+```
+
 See the [Stimulus Docs](https://stimulus.hotwire.dev/handbook/introduction)
 for what else Stimulus can do!
 
