@@ -16,7 +16,9 @@
         "stimulus": "^2.0"
     },
     "dependencies": {
-        "acorn": "^8.0.5"
+        "acorn": "^8.0.5",
+        "loader-utils": "^2.0.0",
+        "schema-utils": "^3.0.0"
     },
     "devDependencies": {
         "@babel/cli": "^7.12.1",

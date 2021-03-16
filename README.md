@@ -230,6 +230,43 @@ export default class extends Controller {
 }
 ```
 
+### Advanced Lazy Controllers
+
+Sometimes you may want to use a third-party controller and make it lazy.
+Unfortunately, you can't edit that controller's source code to add
+the `/* stimulusFetch: 'lazy' */`.
+
+To handle this, you can use the `lazy-controller-loader` with some
+custom query options.
+
+```js
+// assets/bootstrap.js
+
+import { startStimulusApp } from '@symfony/stimulus-bridge';
+
+// example from https://stimulus-components.netlify.app/docs/components/stimulus-clipboard/
+// normal, non-lazy import
+//import Clipboard from 'stimulus-clipboard';
+// lazy import
+import Clipboard from '@symfony/stimulus-bridge/lazy-controller-loader?lazy=true!stimulus-clipboard';
+
+// example from https://github.com/afcapel/stimulus-autocomplete
+// normal, non-lazy import
+//import { Autocomplete } from 'stimulus-autocomplete';
+// lazy import - it includes export=Autocomplete to handle the named export
+import { Autocomplete } from '@symfony/stimulus-bridge/lazy-controller-loader?lazy=true&export=Autocomplete!stimulus-autocomplete';
+
+const app = startStimulusApp(require.context(
+    // your existing code to load from controllers/
+));
+
+// the normal way to manually register controllers
+application.register('clipboard', Clipboard)
+application.register('autocomplete', Autocomplete)
+
+export { app };
+```
+
 ## Run tests
 
 ```sh
