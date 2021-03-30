@@ -64,16 +64,19 @@ automatically when installing UX packages) and any controllers that
 you add in `assets/controllers/`:
 
 ```javascript
-// assets/app.js
-// (or assets/bootstrap.js - and then import it from app.js)
+// assets/bootstrap.js (and then import it from app.js)
 
-import { startStimulusApp } from '@symfony/stimulus-bridge';
-
+// Registers Stimulus controllers from controllers.json and in the controllers/ directory
 export const app = startStimulusApp(require.context(
+const app = startStimulusApp(require.context(
     '@symfony/stimulus-bridge/lazy-controller-loader!./controllers',
     true,
     /\.(j|t)sx?$/
 ));
+// register any custom, 3rd party controllers here
+// app.register('some_controller_name', SomeImportedController);
+
+export { app };
 ```
 
 That's it! Now run Encore:
