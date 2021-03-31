@@ -13,8 +13,9 @@
  *
  * @param {string} controllerPath The importable path to the controller
  * @param {Number} indentationSpaces Amount each line should be indented
+ * @param {string} exportName The name of the module that's exported from the controller
  */
-module.exports = function generateLazyController(controllerPath, indentationSpaces) {
+module.exports = function generateLazyController(controllerPath, indentationSpaces, exportName = 'default') {
     const spaces = ' '.repeat(indentationSpaces);
 
     return `${spaces}(function() {
@@ -34,7 +35,7 @@ ${spaces}        })) {
 ${spaces}            return;
 ${spaces}        }
 ${spaces}        import('${controllerPath.replace(/\\/g, '\\\\')}').then(function(controller) {
-${spaces}            _this.application.register(_this.identifier, controller.default);
+${spaces}            _this.application.register(_this.identifier, controller.${exportName});
 ${spaces}        });
 ${spaces}    }
 ${spaces}    return LazyController;

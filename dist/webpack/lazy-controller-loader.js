@@ -17,6 +17,24 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 var generateLazyController = require('./generate-lazy-controller');
 
 var getStimulusCommentOptions = require('../util/get-stimulus-comment-options');
+
+var _require = require('loader-utils'),
+    getOptions = _require.getOptions;
+
+var _require2 = require('schema-utils'),
+    validate = _require2.validate;
+
+var schema = {
+  type: 'object',
+  properties: {
+    lazy: {
+      type: 'boolean'
+    },
+    "export": {
+      type: 'string'
+    }
+  }
+};
 /**
  * Loader that can make a Stimulus controller lazy.
  *
@@ -27,11 +45,12 @@ var getStimulusCommentOptions = require('../util/get-stimulus-comment-options');
  * element appears.
  *
  * @param {string} source of a module that exports a Stimulus controller
+ * @param {string} sourceMap the current source map string
+ *
  * @return {string}
  */
 
-
-module.exports = function (source) {
+module.exports = function (source, sourceMap) {
   var _getStimulusCommentOp = getStimulusCommentOptions(source),
       options = _getStimulusCommentOp.options,
       errors = _getStimulusCommentOp.errors;
@@ -56,11 +75,22 @@ module.exports = function (source) {
     this.emitError(new Error("Invalid value \"".concat(stimulusFetch, "\" found for \"stimulusFetch\". Allowed values are \"lazy\" or \"eager\"")));
   }
 
-  var isLazy = stimulusFetch === 'lazy';
+  var loaderOptions = getOptions(this);
+  validate(schema, loaderOptions, {
+    name: '@symfony/stimulus-bridge/lazy-controller-loader',
+    baseDataPath: 'options'
+  }); // the ?lazy= loader option takes priority over the comment
+
+  var isLazy = typeof loaderOptions.lazy !== 'undefined' ? loaderOptions.lazy : stimulusFetch === 'lazy';
 
   if (!isLazy) {
-    return source;
+    return this.callback(null, source, sourceMap);
   }
 
-  return "import { Controller } from 'stimulus';\nexport default ".concat(generateLazyController(this.resource, 0));
+  var exportName = typeof loaderOptions["export"] !== 'undefined' ? loaderOptions["export"] : 'default';
+  var finalSource = "import { Controller } from 'stimulus';\nconst controller = ".concat(generateLazyController(this.resource, 0, exportName), ";\nexport { controller as ").concat(exportName, " };"); // The source Map cannot be passed when lazy, as the sourceMap won't
+  // map up to the new source. In theory, this is fixable, but I'm
+  // not entirely sure how.
+
+  this.callback(null, finalSource);
 };
