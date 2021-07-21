@@ -1,13 +1,13 @@
 # Symfony UX Stimulus bridge
 
-The Stimulus bridge integrates [Stimulus](https://stimulus.hotwire.dev/)
+The Stimulus bridge integrates [Stimulus](https://stimulus.hotwired.dev/)
 into your Symfony app by automatically loading both third-party controllers
 and your own custom controllers. It works by reading a `controllers.json`
 file that describes your third-party controllers. This file is updated
 automatically when you install [Symfony UX Packages](https://github.com/symfony/ux).
 
 Before you start, familiarize yourself with the basics of
-[Stimulus](https://stimulus.hotwire.dev/).
+[Stimulus](https://stimulus.hotwired.dev/).
 
 Symfony UX Stimulus bridge is currently considered **experimental**.
 
@@ -136,7 +136,7 @@ the name will include `--` in place of each `/`:
 </div>
 ```
 
-See the [Stimulus Docs](https://stimulus.hotwire.dev/handbook/introduction)
+See the [Stimulus Docs](https://stimulus.hotwired.dev/handbook/introduction)
 for what else Stimulus can do!
 
 ## Common Errors
