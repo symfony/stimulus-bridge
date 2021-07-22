@@ -24,7 +24,7 @@ Symfony Flex recipe that will set up everything for you. Finish by
 running Encore:
 
 ```sh
-yarn encore watch
+yarn encore dev --watch
 ```
 
 If you already had Encore installed (and so the recipe did not run), you
