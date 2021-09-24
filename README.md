@@ -36,7 +36,7 @@ The Webpack Encore recipe usually handles setting up everything you need.
 But you can also do it manually. First, install the bridge:
 
 ```sh
-yarn add @symfony/stimulus-bridge stimulus --dev
+yarn add @symfony/stimulus-bridge @hotwired/stimulus --dev
 ```
 
 Next, create an `assets/controllers.json` file: Flex will update
@@ -99,7 +99,7 @@ Let's see an example: create a new `assets/controllers/hello_controller.js`
 file (you may already have this):
 
 ```
-import { Controller } from 'stimulus';
+import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
     connect() {
@@ -222,7 +222,7 @@ Next, you can make any controllers lazy by adding a `/* stimulusFetch: 'lazy' */
 comment above that controller:
 
 ```js
-import { Controller } from 'stimulus';
+import { Controller } from '@hotwired/stimulus';
 
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {

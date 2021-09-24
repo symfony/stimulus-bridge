@@ -88,7 +88,7 @@ module.exports = function (source, sourceMap) {
   }
 
   var exportName = typeof loaderOptions["export"] !== 'undefined' ? loaderOptions["export"] : 'default';
-  var finalSource = "import { Controller } from 'stimulus';\nconst controller = ".concat(generateLazyController(this.resource, 0, exportName), ";\nexport { controller as ").concat(exportName, " };"); // The source Map cannot be passed when lazy, as the sourceMap won't
+  var finalSource = "import { Controller } from '@hotwired/stimulus';\nconst controller = ".concat(generateLazyController(this.resource, 0, exportName), ";\nexport { controller as ").concat(exportName, " };"); // The source Map cannot be passed when lazy, as the sourceMap won't
   // map up to the new source. In theory, this is fixable, but I'm
   // not entirely sure how.
 

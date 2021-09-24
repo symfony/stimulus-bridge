@@ -9,8 +9,8 @@
 
 'use strict';
 
-import { Application } from 'stimulus';
-import { definitionsFromContext } from 'stimulus/webpack-helpers';
+import { Application } from '@hotwired/stimulus';
+import { definitionsFromContext } from '@hotwired/stimulus-webpack-helpers';
 
 // The @symfony/stimulus-bridge/controllers.json should be changed
 // to point to the real controllers.json file via a Webpack alias

@@ -9,8 +9,8 @@ jobs:
             - uses: actions/checkout@master
             - name: Prettier
               run: |
-                  yarn global add prettier@^2.2.0
-                  ~/.yarn/bin/prettier --check {src,test}/**/*.js --config .prettierrc.json
+                  yarn
+                  yarn run prettier --check {src,test}/**/*.js --config .prettierrc.json
 
     tests:
         runs-on: ubuntu-latest

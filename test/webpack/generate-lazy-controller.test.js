@@ -17,7 +17,7 @@ describe('generateLazyControllerModule', () => {
     describe('generateLazyController()', () => {
         it('must return a functional ES5 class', () => {
             const controllerCode =
-                "const Controller = require('stimulus');\n" +
+                "const Controller = require('@hotwired/stimulus');\n" +
                 // this, for some reason, is undefined in a test but populated in a real situation
                 // this avoid an explosion since it is undefined here
                 'Controller.prototype = {};\n' +
@@ -35,7 +35,7 @@ describe('generateLazyControllerModule', () => {
 
         it('must return a functional ES5 class on Windows', () => {
             const controllerCode =
-                "const Controller = require('stimulus');\n" +
+                "const Controller = require('@hotwired/stimulus');\n" +
                 // this, for some reason, is undefined in a test but populated in a real situation
                 // this avoid an explosion since it is undefined here
                 'Controller.prototype = {};\n' +
@@ -56,7 +56,7 @@ describe('generateLazyControllerModule', () => {
 
         it('must use the correct, named export', () => {
             const controllerCode =
-                "const Controller = require('stimulus');\n" +
+                "const Controller = require('@hotwired/stimulus');\n" +
                 // this, for some reason, is undefined in a test but populated in a real situation
                 // this avoid an explosion since it is undefined here
                 'Controller.prototype = {};\n' +
