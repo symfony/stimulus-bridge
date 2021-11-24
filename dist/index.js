@@ -13,9 +13,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.startStimulusApp = startStimulusApp;
 
-var _stimulus = require("stimulus");
+var _stimulus = require("@hotwired/stimulus");
 
-var _webpackHelpers = require("stimulus/webpack-helpers");
+var _stimulusWebpackHelpers = require("@hotwired/stimulus-webpack-helpers");
 
 var _controllers = _interopRequireDefault(require("./webpack/loader!@symfony/stimulus-bridge/controllers.json"));
 
@@ -27,7 +27,7 @@ function startStimulusApp(context) {
   var application = _stimulus.Application.start();
 
   if (context) {
-    application.load((0, _webpackHelpers.definitionsFromContext)(context));
+    application.load((0, _stimulusWebpackHelpers.definitionsFromContext)(context));
   }
 
   var _loop = function _loop(controllerName) {

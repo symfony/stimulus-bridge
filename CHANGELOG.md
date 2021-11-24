@@ -1,5 +1,25 @@
 # CHANGELOG
 
+## 3.0.0
+
+Dropped support for `stimulus` 2.0, in favor of `@hotwired/stimulus` version 3.
+You can read about Stimulus version on its [release announcement](https://world.hey.com/hotwired/stimulus-3-c438d432).
+
+The most important change needed is to:
+
+* Remove `stimulus` from your `package.json` file, replace it with `"@hotwired/stimulus": "^3.0"`
+  and run `yarn install`.
+
+* Update all of your controllers to replace any imports for `stimulus` with
+  imports from `@hotwired/stimulus`:
+
+```diff
+-import { Controller } from 'stimulus';
++import { Controller } from '@hotwired/stimulus';
+```
+
+* Upgrade any `symfony/ux-*` PHP packages that you have installed to version 2 or later.
+
 ## 2.0.0
 
 Following the release of Webpack Encore 1.0, this release adapts the stimulus-bridge to Webpack 5

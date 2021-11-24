@@ -96,7 +96,7 @@ ${generateLazyController(controllerMain, 6)}
     }
 
     if (hasLazyControllers) {
-        controllerContents = `import { Controller } from 'stimulus';\n${controllerContents}`;
+        controllerContents = `import { Controller } from '@hotwired/stimulus';\n${controllerContents}`;
     }
 
     return {

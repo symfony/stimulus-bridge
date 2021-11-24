@@ -13,9 +13,10 @@
         "test": "webpack --config test/webpack.config.js && jest"
     },
     "peerDependencies": {
-        "stimulus": "^2.0"
+        "@hotwired/stimulus": "^3.0"
     },
     "dependencies": {
+        "@hotwired/stimulus-webpack-helpers": "^1.0.1",
         "acorn": "^8.0.5",
         "loader-utils": "^2.0.0",
         "schema-utils": "^3.0.0"
@@ -24,9 +25,10 @@
         "@babel/cli": "^7.12.1",
         "@babel/core": "^7.12.3",
         "@babel/preset-env": "^7.12.7",
+        "@hotwired/stimulus": "^3.0",
         "@symfony/mock-module": "file:test/fixtures/module",
         "@symfony/stimulus-testing": "^1.0.0",
-        "stimulus": "^2.0",
+        "prettier": "^2.2.0",
         "webpack": "^5.11.1",
         "webpack-cli": "^4.3.0"
     },

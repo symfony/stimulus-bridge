@@ -74,7 +74,7 @@ module.exports = function (source, sourceMap) {
 
     const exportName = typeof loaderOptions.export !== 'undefined' ? loaderOptions.export : 'default';
 
-    const finalSource = `import { Controller } from 'stimulus';
+    const finalSource = `import { Controller } from '@hotwired/stimulus';
 const controller = ${generateLazyController(this.resource, 0, exportName)};
 export { controller as ${exportName} };`;
 

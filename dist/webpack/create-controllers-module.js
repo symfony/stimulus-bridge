@@ -82,7 +82,7 @@ module.exports = function createControllersModule(config) {
   }
 
   if (hasLazyControllers) {
-    controllerContents = "import { Controller } from 'stimulus';\n".concat(controllerContents);
+    controllerContents = "import { Controller } from '@hotwired/stimulus';\n".concat(controllerContents);
   }
 
   return {

@@ -69,7 +69,7 @@ describe('createControllersModule', () => {
             const config = require('../fixtures/lazy-no-autoimport.json');
             expect(createControllersModule(config).finalSource).toEqual(
                 `
-import { Controller } from 'stimulus';
+import { Controller } from '@hotwired/stimulus';
 export default {
   'symfony--mock-module--mock': new Promise((resolve, reject) => resolve({ default:
       (function() {
