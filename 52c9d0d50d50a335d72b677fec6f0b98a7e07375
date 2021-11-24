@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by stof at 2021-09-26T10:58:32Z
+
+> Unless we get fancy (which we could I think, but it's a bit unnatural)
+
+I don't see how you could get fancy. Changing peer dependencies is a BC break.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2021-09-26T19:25:21Z
+
+Yup, the “fancy” would require not listing either as a peer dependency and hoping for the best. So not really an option :)
