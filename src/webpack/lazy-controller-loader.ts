@@ -9,10 +9,10 @@
 
 'use strict';
 
-const generateLazyController = require('./generate-lazy-controller');
-const getStimulusCommentOptions = require('../util/get-stimulus-comment-options');
-const { getOptions } = require('loader-utils');
-const { validate } = require('schema-utils');
+import generateLazyController from './generate-lazy-controller';
+import getStimulusCommentOptions from '../util/get-stimulus-comment-options';
+import * as loaderUtils from 'loader-utils';
+import * as schemaUtils from 'schema-utils';
 
 const schema = {
     type: 'object',
@@ -40,7 +40,7 @@ const schema = {
  *
  * @return {string}
  */
-module.exports = function (source, sourceMap) {
+export default function (source: string, sourceMap: string) {
     const { options, errors } = getStimulusCommentOptions(source);
 
     for (const error of errors) {
@@ -58,9 +58,9 @@ module.exports = function (source, sourceMap) {
         );
     }
 
-    const loaderOptions = getOptions(this);
+    const loaderOptions = loaderUtils.getOptions(this);
 
-    validate(schema, loaderOptions, {
+    schemaUtils.validate(schema, loaderOptions, {
         name: '@symfony/stimulus-bridge/lazy-controller-loader',
         baseDataPath: 'options',
     });
@@ -82,4 +82,4 @@ export { controller as ${exportName} };`;
     // map up to the new source. In theory, this is fixable, but I'm
     // not entirely sure how.
     this.callback(null, finalSource);
-};
+}

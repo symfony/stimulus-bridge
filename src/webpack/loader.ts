@@ -9,8 +9,8 @@
 
 'use strict';
 
-const LoaderDependency = require('webpack/lib/dependencies/LoaderDependency');
-const createControllersModule = require('./create-controllers-module');
+import LoaderDependency from 'webpack/lib/dependencies/LoaderDependency';
+import createControllersModule from './create-controllers-module';
 
 /**
  * Loader that processes the controllers.json file.
@@ -23,9 +23,7 @@ const createControllersModule = require('./create-controllers-module');
  * @param {string} source controllers.json source
  * @return {string}
  */
-module.exports = function (source) {
-    const logger = this.getLogger('stimulus-bridge-loader');
-
+export default function (source: string) {
     /*
      * The following code prevents the normal JSON loader from
      * executing after our loader. This is a workaround from WebpackEncore.
@@ -47,4 +45,4 @@ module.exports = function (source) {
     });
 
     return finalSource;
-};
+}

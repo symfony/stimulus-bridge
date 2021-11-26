@@ -9,7 +9,7 @@
 
 'use strict';
 
-const getStimulusCommentOptions = require('../../dist/util/get-stimulus-comment-options');
+import getStimulusCommentOptions from '../../src/util/get-stimulus-comment-options';
 
 describe('getStimulusCommentOptions', () => {
     it('parses source with no comments', () => {
