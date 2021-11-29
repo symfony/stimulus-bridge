@@ -9,9 +9,9 @@
 
 'use strict';
 
-const generateLazyController = require('../../dist/webpack/generate-lazy-controller');
-const babelParser = require('@babel/parser');
-const babelTypes = require('@babel/types');
+import generateLazyController from '../../src/webpack/generate-lazy-controller';
+import { parse } from '@babel/parser';
+import { isNode } from '@babel/types';
 
 describe('generateLazyControllerModule', () => {
     describe('generateLazyController()', () => {
@@ -22,10 +22,10 @@ describe('generateLazyControllerModule', () => {
                 // this avoid an explosion since it is undefined here
                 'Controller.prototype = {};\n' +
                 generateLazyController('@symfony/some-module/dist/controller.js');
-            const result = babelParser.parse(controllerCode, {
+            const result = parse(controllerCode, {
                 sourceType: 'module',
             });
-            expect(babelTypes.isNode(result)).toBeTruthy();
+            expect(isNode(result)).toBeTruthy();
 
             const lazyControllerClass = eval(`${controllerCode}`);
             // if all goes correctly, the prototype should have a Controller key
@@ -40,10 +40,10 @@ describe('generateLazyControllerModule', () => {
                 // this avoid an explosion since it is undefined here
                 'Controller.prototype = {};\n' +
                 generateLazyController('C:\\\\path\\to\\file.js');
-            const result = babelParser.parse(controllerCode, {
+            const result = parse(controllerCode, {
                 sourceType: 'module',
             });
-            expect(babelTypes.isNode(result)).toBeTruthy();
+            expect(isNode(result)).toBeTruthy();
             /*
              * This looks insane. We're creating a string that looks like this:
              *      C:\\\\path\\to\\file.js
@@ -61,10 +61,10 @@ describe('generateLazyControllerModule', () => {
                 // this avoid an explosion since it is undefined here
                 'Controller.prototype = {};\n' +
                 generateLazyController('@symfony/some-module/dist/controller.js', 0, 'CustomController');
-            const result = babelParser.parse(controllerCode, {
+            const result = parse(controllerCode, {
                 sourceType: 'module',
             });
-            expect(babelTypes.isNode(result)).toBeTruthy();
+            expect(isNode(result)).toBeTruthy();
             expect(controllerCode).toContain(
                 '_this.application.register(_this.identifier, controller.CustomController)'
             );

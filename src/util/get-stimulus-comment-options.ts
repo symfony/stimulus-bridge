@@ -9,8 +9,8 @@
 
 'use strict';
 
-const acorn = require('acorn');
-const vm = require('vm');
+import { Comment, parse } from 'acorn';
+import vm from 'vm';
 
 const stimulusCommentRegExp = new RegExp(/(^|\W)stimulus[A-Z]{1,}[A-Za-z]{1,}:/);
 
@@ -19,9 +19,9 @@ const EMPTY_COMMENT_OPTIONS = {
     errors: [],
 };
 
-function getCommentsFromSource(source) {
-    const comments = [];
-    acorn.parse(source, {
+function getCommentsFromSource(source: string) {
+    const comments: Comment[] = [];
+    parse(source, {
         onComment: comments,
         sourceType: 'module',
         ecmaVersion: 2020,
@@ -33,7 +33,7 @@ function getCommentsFromSource(source) {
 /**
  * Inspired by Webpack's JavaScriptParser
  */
-module.exports = function parseComments(source) {
+export default function (source: string) {
     let comments;
     try {
         comments = getCommentsFromSource(source);
@@ -45,8 +45,8 @@ module.exports = function parseComments(source) {
         return EMPTY_COMMENT_OPTIONS;
     }
 
-    let options = {};
-    let errors = [];
+    const options = {};
+    const errors = [];
     for (const comment of comments) {
         const { value } = comment;
         if (value && stimulusCommentRegExp.test(value)) {
@@ -54,11 +54,11 @@ module.exports = function parseComments(source) {
             try {
                 const val = vm.runInNewContext(`(function(){return {${value}};})()`);
                 Object.assign(options, val);
-            } catch (e) {
+            } catch (e: any) {
                 e.comment = comment;
                 errors.push(e);
             }
         }
     }
     return { options, errors };
-};
+}

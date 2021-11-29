@@ -9,9 +9,9 @@
 
 'use strict';
 
-const generateLazyController = require('./generate-lazy-controller');
+import generateLazyController from './generate-lazy-controller';
 
-module.exports = function createControllersModule(config) {
+export default function createControllersModule(config) {
     let controllerContents = 'export default {';
     let autoImportContents = '';
     let hasLazyControllers = false;
@@ -27,7 +27,7 @@ module.exports = function createControllersModule(config) {
         throw new Error('Your Stimulus configuration file (assets/controllers.json) lacks a "controllers" key.');
     }
 
-    for (let packageName in config.controllers) {
+    for (const packageName in config.controllers) {
         let packageConfig;
         try {
             packageConfig = require(packageName + '/package.json');
@@ -37,7 +37,7 @@ module.exports = function createControllersModule(config) {
             );
         }
 
-        for (let controllerName in config.controllers[packageName]) {
+        for (const controllerName in config.controllers[packageName]) {
             const controllerReference = packageName + '/' + controllerName;
             // Normalize the controller name: remove the initial @ and use Stimulus format
             const controllerNormalizedName = controllerReference.substr(1).replace(/_/g, '-').replace(/\//g, '--');
@@ -87,7 +87,7 @@ ${generateLazyController(controllerMain, 6)}
 
             controllerContents += `\n  '${controllerNormalizedName}': ${moduleValueContents},`;
 
-            for (let autoimport in controllerUserConfig.autoimport || []) {
+            for (const autoimport in controllerUserConfig.autoimport || []) {
                 if (controllerUserConfig.autoimport[autoimport]) {
                     autoImportContents += "import '" + autoimport + "';\n";
                 }
@@ -103,4 +103,4 @@ ${generateLazyController(controllerMain, 6)}
         finalSource: `${autoImportContents}${controllerContents}\n};`,
         deprecations,
     };
-};
+}

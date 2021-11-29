@@ -1,50 +1,48 @@
+import { Application } from '@hotwired/stimulus';
+import symfonyControllers from './webpack/loader!@symfony/stimulus-bridge/controllers.json';
+
 /*
- * This file is part of the Symfony package.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+Stimulus Webpack Helpers 1.0.0
+Copyright © 2021 Basecamp, LLC
  */
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.startStimulusApp = startStimulusApp;
-
-var _stimulus = require("@hotwired/stimulus");
-
-var _stimulusWebpackHelpers = require("@hotwired/stimulus-webpack-helpers");
-
-var _controllers = _interopRequireDefault(require("./webpack/loader!@symfony/stimulus-bridge/controllers.json"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-// The @symfony/stimulus-bridge/controllers.json should be changed
-// to point to the real controllers.json file via a Webpack alias
-function startStimulusApp(context) {
-  var application = _stimulus.Application.start();
-
-  if (context) {
-    application.load((0, _stimulusWebpackHelpers.definitionsFromContext)(context));
-  }
-
-  var _loop = function _loop(controllerName) {
-    if (!_controllers["default"].hasOwnProperty(controllerName)) {
-      return "continue";
-    }
-
-    _controllers["default"][controllerName].then(function (module) {
-      application.register(controllerName, module["default"]);
-    });
-  };
-
-  for (var controllerName in _controllers["default"]) {
-    var _ret = _loop(controllerName);
-
-    if (_ret === "continue") continue;
-  }
-
-  return application;
+function definitionsFromContext(context) {
+    return context.keys()
+        .map((key) => definitionForModuleWithContextAndKey(context, key))
+        .filter((value) => value);
 }
+function definitionForModuleWithContextAndKey(context, key) {
+    const identifier = identifierForContextKey(key);
+    if (identifier) {
+        return definitionForModuleAndIdentifier(context(key), identifier);
+    }
+}
+function definitionForModuleAndIdentifier(module, identifier) {
+    const controllerConstructor = module.default;
+    if (typeof controllerConstructor == "function") {
+        return { identifier, controllerConstructor };
+    }
+}
+function identifierForContextKey(key) {
+    const logicalName = (key.match(/^(?:\.\/)?(.+)(?:[_-]controller\..+?)$/) || [])[1];
+    if (logicalName) {
+        return logicalName.replace(/_/g, "-").replace(/\//g, "--");
+    }
+}
+
+function startStimulusApp(context) {
+    const application = Application.start();
+    if (context) {
+        application.load(definitionsFromContext(context));
+    }
+    for (const controllerName in symfonyControllers) {
+        if (!symfonyControllers.hasOwnProperty(controllerName)) {
+            continue;
+        }
+        symfonyControllers[controllerName].then((module) => {
+            application.register(controllerName, module.default);
+        });
+    }
+    return application;
+}
+
+export { startStimulusApp };

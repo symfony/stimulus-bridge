@@ -9,14 +9,14 @@
 
 'use strict';
 
-const startStimulusApp = require('./dist/index').startStimulusApp;
+import { startStimulusApp } from './dist/index';
 
 describe('startStimulusApp', () => {
     it('must start the app', async () => {
         const app = startStimulusApp();
 
         // Wait for controllers to be loaded
-        await new Promise(setImmediate);
+        await app.start();
 
         expect(app.router.modules.length).toBe(1);
         expect(app.router.modules[0].definition.identifier).toBe('symfony--mock-module--mock');

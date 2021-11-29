@@ -9,11 +9,12 @@
 
 'use strict';
 
-const createControllersModule = require('../../dist/webpack/create-controllers-module');
+import createControllersModule from '../../src/webpack/create-controllers-module';
 
 describe('createControllersModule', () => {
     describe('empty.json', () => {
         it('must return an empty file', () => {
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/empty.json');
             expect(createControllersModule(config).finalSource).toEqual('export default {\n};');
         });
@@ -21,6 +22,7 @@ describe('createControllersModule', () => {
 
     describe('disabled-controller.json', () => {
         it('must return an empty file', () => {
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/disabled-controller.json');
             expect(createControllersModule(config).finalSource).toEqual('export default {\n};');
         });
@@ -28,6 +30,7 @@ describe('createControllersModule', () => {
 
     describe('disabled-autoimport.json', () => {
         it('must return file with no autoimport', () => {
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/disabled-autoimport.json');
             expect(createControllersModule(config).finalSource).toEqual(
                 "export default {\n  'symfony--mock-module--mock': import(/* webpackMode: \"eager\" */ '@symfony/mock-module/dist/controller.js'),\n};"
@@ -37,6 +40,7 @@ describe('createControllersModule', () => {
 
     describe('eager-no-autoimport.json', () => {
         it('must return file with no autoimport', () => {
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/eager-no-autoimport.json');
             expect(createControllersModule(config).finalSource).toEqual(
                 "export default {\n  'symfony--mock-module--mock': import(/* webpackMode: \"eager\" */ '@symfony/mock-module/dist/controller.js'),\n};"
@@ -46,6 +50,7 @@ describe('createControllersModule', () => {
 
     describe('deprecated-webpack-mode.json', () => {
         it('must return eager mode with deprecation', () => {
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/deprecated-webpack-mode.json');
             const result = createControllersModule(config);
             expect(result.finalSource).toEqual(
@@ -57,6 +62,7 @@ describe('createControllersModule', () => {
 
     describe('eager-autoimport.json', () => {
         it('must return a file with the enabled controller and auto-import', () => {
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/eager-autoimport.json');
             expect(createControllersModule(config).finalSource).toEqual(
                 "import '@symfony/mock-module/dist/style.css';\nexport default {\n  'symfony--mock-module--mock': import(/* webpackMode: \"eager\" */ '@symfony/mock-module/dist/controller.js'),\n};"
@@ -66,6 +72,7 @@ describe('createControllersModule', () => {
 
     describe('lazy-controller-no-autoimport.json', () => {
         it('must return a file with a lazy controller', () => {
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/lazy-no-autoimport.json');
             expect(createControllersModule(config).finalSource).toEqual(
                 `

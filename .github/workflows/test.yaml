@@ -1,6 +1,10 @@
 name: Symfony UX
 
-on: [push, pull_request]
+on:
+    pull_request:
+    push:
+        branches:
+            - 'main'
 
 jobs:
     coding-style:
@@ -10,13 +14,13 @@ jobs:
             - name: Prettier
               run: |
                   yarn
-                  yarn run prettier --check {src,test}/**/*.js --config .prettierrc.json
+                  yarn run check-format
 
     tests:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@master
+            - name: Install dependencies
+              run: yarn
             - name: Tests
-              run: |
-                  yarn
-                  yarn test
+              run: yarn test

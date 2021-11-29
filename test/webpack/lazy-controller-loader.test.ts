@@ -9,7 +9,7 @@
 
 'use strict';
 
-const lazyControllerLoader = require('../../dist/webpack/lazy-controller-loader');
+import lazyControllerLoader from '../../src/webpack/lazy-controller-loader';
 
 function callLoader(src, startingSourceMap = '', query = '') {
     const loaderThis = {
@@ -44,7 +44,7 @@ describe('lazyControllerLoader', () => {
         expect(callLoader(src).errors).toHaveLength(0);
     });
 
-    it('it exports a lazy controller', () => {
+    it('exports a lazy controller', () => {
         const src = "/* stimulusFetch: 'lazy' */ export default class extends Controller {}";
         // look for a little bit of the lazy controller code
         expect(callLoader(src).content).toContain('function LazyController');
@@ -53,31 +53,31 @@ describe('lazyControllerLoader', () => {
         expect(callLoader(src).errors).toHaveLength(0);
     });
 
-    it('it emits an error on a syntax problem', () => {
+    it('emits an error on a syntax problem', () => {
         const src = '/* stimulusFetch: "lazy */ export default class extends Controller {}';
         expect(callLoader(src).errors).toHaveLength(1);
     });
 
-    it('it emits an error on an invalid value', () => {
+    it('emits an error on an invalid value', () => {
         const src = '/* stimulusFetch: "lazy-once" */ export default class extends Controller {}';
         expect(callLoader(src).errors).toHaveLength(1);
     });
 
-    it('it reads ?lazy option', () => {
+    it('reads ?lazy option', () => {
         const src = 'export default class extends Controller {}';
         const results = callLoader(src, '', '?lazy=true');
         expect(results.content).toContain('function LazyController');
         expect(results.errors).toHaveLength(0);
     });
 
-    it('it reads ?lazy and it wins over comments', () => {
+    it('reads ?lazy and it wins over comments', () => {
         const src = "/* stimulusFetch: 'eager' */ export default class extends Controller {}";
         const results = callLoader(src, '', '?lazy=true');
         expect(results.content).toContain('function LazyController');
         expect(results.errors).toHaveLength(0);
     });
 
-    it('it reads ?export for non-default exports', () => {
+    it('reads ?export for non-default exports', () => {
         const src = 'const MyController = class extends Controller {}; export { MyController };';
         const results = callLoader(src, '', '?lazy=true&export=MyController');
         // check that the results are lazy
