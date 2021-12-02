@@ -15,13 +15,10 @@ import { isNode } from '@babel/types';
 
 describe('generateLazyControllerModule', () => {
     describe('generateLazyController()', () => {
-        it('must return a functional ES5 class', () => {
+        it('must return a functional ES6 class', () => {
             const controllerCode =
-                "const Controller = require('@hotwired/stimulus');\n" +
-                // this, for some reason, is undefined in a test but populated in a real situation
-                // this avoid an explosion since it is undefined here
-                'Controller.prototype = {};\n' +
-                generateLazyController('@symfony/some-module/dist/controller.js');
+                "const { Controller } = require('@hotwired/stimulus');\n" +
+                generateLazyController('@symfony/some-module/dist/controller.js', 0);
             const result = parse(controllerCode, {
                 sourceType: 'module',
             });
@@ -29,17 +26,14 @@ describe('generateLazyControllerModule', () => {
 
             const lazyControllerClass = eval(`${controllerCode}`);
             // if all goes correctly, the prototype should have a Controller key
-            expect(Object.getPrototypeOf(lazyControllerClass)).toHaveProperty('Controller');
-            expect(controllerCode).toContain('_this.application.register(_this.identifier, controller.default)');
+            expect(Object.getPrototypeOf(lazyControllerClass)).toHaveProperty('targets');
+            expect(controllerCode).toContain('this.application.register(this.identifier, controller.default)');
         });
 
         it('must return a functional ES5 class on Windows', () => {
             const controllerCode =
-                "const Controller = require('@hotwired/stimulus');\n" +
-                // this, for some reason, is undefined in a test but populated in a real situation
-                // this avoid an explosion since it is undefined here
-                'Controller.prototype = {};\n' +
-                generateLazyController('C:\\\\path\\to\\file.js');
+                "const { Controller } = require('@hotwired/stimulus');\n" +
+                generateLazyController('C:\\\\path\\to\\file.js', 0);
             const result = parse(controllerCode, {
                 sourceType: 'module',
             });
@@ -56,17 +50,14 @@ describe('generateLazyControllerModule', () => {
 
         it('must use the correct, named export', () => {
             const controllerCode =
-                "const Controller = require('@hotwired/stimulus');\n" +
-                // this, for some reason, is undefined in a test but populated in a real situation
-                // this avoid an explosion since it is undefined here
-                'Controller.prototype = {};\n' +
+                "const { Controller } = require('@hotwired/stimulus');\n" +
                 generateLazyController('@symfony/some-module/dist/controller.js', 0, 'CustomController');
             const result = parse(controllerCode, {
                 sourceType: 'module',
             });
             expect(isNode(result)).toBeTruthy();
             expect(controllerCode).toContain(
-                '_this.application.register(_this.identifier, controller.CustomController)'
+                'this.application.register(this.identifier, controller.CustomController)'
             );
         });
     });
