@@ -80,26 +80,22 @@ import { Controller } from '@hotwired/stimulus';
 export default {
   'symfony--mock-module--mock': new Promise((resolve, reject) => resolve({ default:
       (function() {
-          function LazyController(context) {
-              this.__stimulusLazyController = true;
-              Controller.call(this, context);
-          }
-          LazyController.prototype = Object.create(Controller && Controller.prototype, {
-              constructor: { value: LazyController, writable: true, configurable: true }
-          });
-          Object.setPrototypeOf(LazyController, Controller);
-          LazyController.prototype.initialize = function() {
-              var _this = this;
-              if (this.application.controllers.find(function(controller) {
-                  return controller.identifier === _this.identifier && controller.__stimulusLazyController;
-              })) {
-                  return;
+          return class LazyController extends Controller {
+              constructor(context) {
+                  super(context);
+                  this.__stimulusLazyController = true;
               }
-              import('@symfony/mock-module/dist/controller.js').then(function(controller) {
-                  _this.application.register(_this.identifier, controller.default);
-              });
+              initialize() {
+                  if (this.application.controllers.find((controller) => {
+                      return controller.identifier === this.identifier && controller.__stimulusLazyController;
+                  })) {
+                      return;
+                  }
+                  import('@symfony/mock-module/dist/controller.js').then((controller) => {
+                      this.application.register(this.identifier, controller.default);
+                  });
+              }
           }
-          return LazyController;
       })()
   })),
 };

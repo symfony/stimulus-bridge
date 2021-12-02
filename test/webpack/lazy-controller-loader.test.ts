@@ -11,7 +11,7 @@
 
 import lazyControllerLoader from '../../src/webpack/lazy-controller-loader';
 
-function callLoader(src, startingSourceMap = '', query = '') {
+function callLoader(src: string, startingSourceMap = '', query = '') {
     const loaderThis = {
         emittedErrors: [],
         executedCallback: null,
@@ -47,7 +47,7 @@ describe('lazyControllerLoader', () => {
     it('exports a lazy controller', () => {
         const src = "/* stimulusFetch: 'lazy' */ export default class extends Controller {}";
         // look for a little bit of the lazy controller code
-        expect(callLoader(src).content).toContain('function LazyController');
+        expect(callLoader(src).content).toContain('class LazyController');
         // unfortunately, we cannot pass along sourceMap info since we changed the source
         expect(callLoader(src, 'source_map_contents').sourceMap).toBeUndefined();
         expect(callLoader(src).errors).toHaveLength(0);
@@ -66,14 +66,14 @@ describe('lazyControllerLoader', () => {
     it('reads ?lazy option', () => {
         const src = 'export default class extends Controller {}';
         const results = callLoader(src, '', '?lazy=true');
-        expect(results.content).toContain('function LazyController');
+        expect(results.content).toContain('class LazyController');
         expect(results.errors).toHaveLength(0);
     });
 
     it('reads ?lazy and it wins over comments', () => {
         const src = "/* stimulusFetch: 'eager' */ export default class extends Controller {}";
         const results = callLoader(src, '', '?lazy=true');
-        expect(results.content).toContain('function LazyController');
+        expect(results.content).toContain('class LazyController');
         expect(results.errors).toHaveLength(0);
     });
 
@@ -81,7 +81,7 @@ describe('lazyControllerLoader', () => {
         const src = 'const MyController = class extends Controller {}; export { MyController };';
         const results = callLoader(src, '', '?lazy=true&export=MyController');
         // check that the results are lazy
-        expect(results.content).toContain('function LazyController');
+        expect(results.content).toContain('class LazyController');
         // check named export
         expect(results.content).toContain('export { controller as MyController };');
         expect(results.errors).toHaveLength(0);
