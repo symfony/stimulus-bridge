@@ -17,7 +17,7 @@ import { definitionsFromContext } from '@hotwired/stimulus-webpack-helpers';
 // @ts-ignore: Unable to find module
 import symfonyControllers from './webpack/loader!@symfony/stimulus-bridge/controllers.json';
 
-export function startStimulusApp(context: any) {
+export function startStimulusApp(context: __WebpackModuleApi.RequireContext) {
     const application = Application.start();
 
     if (process.env.NODE_ENV === 'development') {

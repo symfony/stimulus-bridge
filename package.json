@@ -3,6 +3,7 @@
     "description": "Stimulus integration bridge for Symfony projects",
     "version": "3.1.0",
     "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "license": "MIT",
     "author": "Titouan Galopin <galopintitouan@gmail.com>",
     "engines": {
@@ -10,6 +11,7 @@
     },
     "scripts": {
         "build": "yarn rollup -c",
+        "build-types": "yarn tsc",
         "test": "yarn run webpack --config test/webpack.config.js && yarn run jest",
         "lint": "yarn run eslint src test",
         "format": "prettier src/*.ts test/*.js --write",
@@ -21,6 +23,7 @@
     },
     "dependencies": {
         "@hotwired/stimulus-webpack-helpers": "^1.0.1",
+        "@types/webpack-env": "^1.16.4",
         "acorn": "^8.0.5",
         "loader-utils": "^2.0.0",
         "schema-utils": "^3.0.0"
