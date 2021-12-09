@@ -7,8 +7,9 @@ You can read about Stimulus version on its [release announcement](https://world.
 
 The most important change needed is to:
 
-* Remove `stimulus` from your `package.json` file, replace it with `"@hotwired/stimulus": "^3.0"`
-  and run `yarn install`. Also upgrade `@symfony/webpack-encore` to 1.7.0 or later.
+* Remove `stimulus` from your `package.json` file and replace it with `"@hotwired/stimulus": "^3.0"`.
+  Also change your `@symfony/webpack-encore` version to `^1.7` and `@symfony/stimulus-bridge` to `^3.0`.
+  After making these changes, run `yarn install`.
 
 * Update all of your controllers to replace any imports for `stimulus` with
   imports from `@hotwired/stimulus`:
@@ -18,8 +19,8 @@ The most important change needed is to:
 +import { Controller } from '@hotwired/stimulus';
 ```
 
-* Upgrade any `symfony/ux-*` PHP packages that you have installed to version 2 or later. Then
-  run `yarn install --force`.
+* In `composer.json`, update any `symfony/ux-*` packages that you have installed to version `^2.0`.
+  Run `composer up "symfony/ux-*"`. Once that finishes, run `yarn install --force`.
 
 ## 2.0.0
 
