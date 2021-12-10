@@ -267,6 +267,34 @@ application.register('autocomplete', Autocomplete)
 export { app };
 ```
 
+## Writing TypeScript controllers
+
+If you want to write TypeScript controllers, make sure the target of your TypeScript config is set to `ES6`:
+
+```json
+{
+    "compilerOptions": {
+        //...
+        "target": "ES6",
+    },
+    //...
+}
+```
+
+If you don't you may face the following issue in your browser console when the controller is called:
+
+```
+# Error thrown in Chrome console:
+Uncaught (in promise) TypeError: Class constructor Controller cannot be invoked without 'new'
+
+# Error thrown in Firefox console:
+Uncaught (in promise) TypeError: class constructors must be invoked with 'new'
+```
+
+The error is caused when an ES5 class tries to "extend" an ES6 class. If the target is not correctly set, 
+TypeScript will transpile the controller to old ES5 code. But Stimulus 3 uses pure ES6 classes. 
+This causes an incompatibility, hence the need to target ES6 explicitly.
+
 ## Run tests
 
 ```sh
