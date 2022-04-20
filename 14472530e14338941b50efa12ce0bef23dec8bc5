@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+
+by WebMamba at 2022-04-19T14:45:54Z
+
+Hi @weaverryan thanks for this PR, small but can definitely save time for many people ! 😁
+I just just think we should give access to this debug value from outside the index file. In case you have an other environment where the debug mode should be activate to. So what's you think about adding that to the bootstrap file in the recipe ? Or adding an argument to the startStimulusApp function to overwrite the debug value ?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2022-04-19T14:56:32Z
+
+Hey @WebMamba!
+
+I'm not sure what use-case you have in mind, but I think it's not needed. You can always override this in your `bootstrap.js` file if you need to:
+
+```diff
+
+import { startStimulusApp } from '@symfony/stimulus-bridge';
+
+// Registers Stimulus controllers from controllers.json and in the controllers/ directory
+export const app = startStimulusApp(require.context(
+    '@symfony/stimulus-bridge/lazy-controller-loader!./controllers',
+    true,
+    /\.[jt]sx?$/
+));
++ // override however you want
++ app.debug = true;
+
+// register any custom, 3rd party controllers here
+// app.register('some_controller_name', SomeImportedController);
+```
+
+Cheers!
+
+---------------------------------------------------------------------------
+
+by WebMamba at 2022-04-19T15:19:32Z
+
+Ha yes your right ! My bad... 😁
