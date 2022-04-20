@@ -20,6 +20,10 @@ import symfonyControllers from './webpack/loader!@symfony/stimulus-bridge/contro
 export function startStimulusApp(context: any) {
     const application = Application.start();
 
+    if (process.env.NODE_ENV === 'development') {
+        application.debug = true;
+    }
+
     if (context) {
         application.load(definitionsFromContext(context));
     }

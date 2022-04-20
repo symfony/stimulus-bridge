@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.1.0
+
+* Automatically enabled Stimulus's "debug" mode when doing a dev build. You will
+  now, while developing, see debugging information in your browser's console log!
+  See #65.
+
 ## 3.0.0
 
 Dropped support for `stimulus` 2.0, in favor of `@hotwired/stimulus` version 3.
