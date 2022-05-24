@@ -201,6 +201,11 @@ ordered from least to most lazy:
 
 ## Lazy Controllers
 
+**NOTE**: When using lazy controllers, you may notice in your browser's console that
+your controller appears to be initialized and connected *twice*. But actually, the
+first initialize and connect are just a result of an internal controller setting
+up your real controller.
+
 You can also make your own controllers "lazy": giving them the same behavior
 as the `lazy-controller` explained above. In this case, your controller isn't
 downloaded until an element for that controller first appears on the page.
