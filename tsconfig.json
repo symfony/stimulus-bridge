@@ -11,9 +11,10 @@
         "outDir": "dist",
         "baseUrl": ".",
         "noEmit": false,
-        "declaration": false,
+        "declaration": true,
+        "emitDeclarationOnly": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true
     },
-    "include": ["src/**/*", "test/**/*"]
+    "include": ["src/**/*"]
 }
