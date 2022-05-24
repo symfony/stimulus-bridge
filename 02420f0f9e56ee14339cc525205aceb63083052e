@@ -1,0 +1,104 @@
+---------------------------------------------------------------------------
+
+by chapterjason at 2021-12-07T19:35:47Z
+
+Hey :)
+
+1. The `package.json` file in the types folder can be removed and we should mark it as deprecated on npm (never had the case before)
+2. The types file should now look like this if it is served with the source:
+
+```typescript
+/*
+ * This file is part of the Symfony package.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+import { Application } from "@hotwired/stimulus";
+
+export declare function startStimulusApp(context?: __WebpackModuleApi.RequireContext): Application;
+
+```
+
+3. As in my first proposal in #8 we will have the issue that types for `__WebpackModuleApi.RequireContext` will be missing. Adding `@types/webpack-env` as dependency will fix that.
+
+---------------------------------------------------------------------------
+
+by tgalopin at 2021-12-09T09:31:29Z
+
+Would it make sense to write this whole package in Typescript too, which would avoid the need for a types file?
+
+---------------------------------------------------------------------------
+
+by chapterjason at 2021-12-09T10:06:57Z
+
+@tgalopin ~~I proposed that for encore some months/years ago.~~
+
+~~The drawback is that you can't test dev branches, as you need to compile first. Can't find the comment anymore. Or you need to check in the dist (what is already the case, what I would prefer to get rid of.)~~
+
+~~I think for now it is enough to have just the types, the package is pretty small for that overhead.~~
+
+~~found the comment: https://github.com/symfony/webpack-encore/issues/816#issuecomment-690990727~~
+
+/edit I'am confused, just checked the source, and it is already ts. 😄 What we could do is, set this to true https://github.com/symfony/stimulus-bridge/blob/e3b6d0981264ba557db3192ef7b744dc6066c107/tsconfig.json#L14
+
+and reference the output .d.ts in the package.json instead.
+
+/edit Also this can be typed https://github.com/symfony/stimulus-bridge/blob/e3b6d0981264ba557db3192ef7b744dc6066c107/src/index.ts#L20 as `__WebpackModuleApi.RequireContext` from `@types/webpack-env`
+
+---------------------------------------------------------------------------
+
+by tgalopin at 2021-12-09T10:53:41Z
+
+Ah right, I mixed things up, this package is already TS. Let's finalize this PR then!
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2021-12-09T13:15:00Z
+
+When I output all of the .d.ts files locally, it creates (of course ) .d.ts files or ALL of the files. Do we want to do that? Really, only the `startStimulusApp` is something the user should want the type for. WDYT?
+
+---------------------------------------------------------------------------
+
+by chapterjason at 2021-12-09T14:30:57Z
+
+I wouldn't maintain the types separately.
+
+IIRC with `{ "types": "./dist/index.d.ts" }` the consumer only get types for exports defined in the given file. So it wouldn't affect the consuming tsc or ide.
+
+![image](https://user-images.githubusercontent.com/1337562/145415151-18057617-634c-445f-b1d0-3c08c452857c.png)
+
+You only get the other types if you explicit import them like that:
+
+![image](https://user-images.githubusercontent.com/1337562/145415261-5df9a9dc-3d37-44e2-a033-177a353965bc.png)
+
+---------------------------------------------------------------------------
+
+by dehy at 2022-04-05T10:05:36Z
+
+Any news about this PR ? Having the types inside the package would be great.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2022-04-20T15:27:13Z
+
+@chapterjason can you have a look now?
+
+The only weird part is that, while you can build the types with `yarn tsc`, it will also output `.d.ts` files for files like `dist/util/get-stimulus-comment-options.d.ts`, which is not a file we actually build into the `dist/` folder. For now, I've just manually not included those extra files.
+
+---------------------------------------------------------------------------
+
+by chapterjason at 2022-04-20T17:18:13Z
+
+@weaverryan LGTM
+
+In the end it's just javascript and the method is theoretically still loadable and useable. If you import `@symfony/stimulus-bridge/util/get-stimulus-comment-options` you don't have types. But I think it's fine to ignore it, cause it isn't part of the public API.
+
+---------------------------------------------------------------------------
+
+by chapterjason at 2022-04-20T17:19:49Z
+
+Ahh I forgot, we also could add a short script in the `package.json` to build the types.
