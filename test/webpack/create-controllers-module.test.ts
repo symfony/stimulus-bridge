@@ -103,4 +103,14 @@ export default {
             );
         });
     });
+
+    describe('default-import-name.json', () => {
+        it('must register a controller with no second part of the name', () => {
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
+            const config = require('../fixtures/default-import-name.json');
+            expect(createControllersModule(config).finalSource).toEqual(
+                "export default {\n  'symfony--mock-module': import(/* webpackMode: \"eager\" */ '@symfony/mock-module/dist/default_controller.js'),\n};"
+            );
+        });
+    });
 });

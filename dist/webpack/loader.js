@@ -49,7 +49,13 @@ function createControllersModule(config) {
         }
         for (const controllerName in config.controllers[packageName]) {
             const controllerReference = packageName + '/' + controllerName;
-            const controllerNormalizedName = controllerReference.substr(1).replace(/_/g, '-').replace(/\//g, '--');
+            let controllerNormalizedName;
+            if (controllerName === 'default') {
+                controllerNormalizedName = packageName.substr(1).replace(/_/g, '-').replace(/\//g, '--');
+            }
+            else {
+                controllerNormalizedName = controllerReference.substr(1).replace(/_/g, '-').replace(/\//g, '--');
+            }
             if ('undefined' === typeof packageConfig.symfony.controllers[controllerName]) {
                 throw new Error('Controller "' + controllerReference + '" does not exist in the package and cannot be compiled.');
             }

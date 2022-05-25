@@ -10,6 +10,11 @@
                 "importedStyles": {
                     "@symfony/mock-module/dist/style.css": true
                 }
+            },
+            "default": {
+                "main": "dist/default_controller.js",
+                "webpackMode": "eager",
+                "enabled": true
             }
         }
     }

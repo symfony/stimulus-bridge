@@ -11,7 +11,7 @@
 
 import generateLazyController from './generate-lazy-controller';
 
-export default function createControllersModule(config) {
+export default function createControllersModule(config: any) {
     let controllerContents = 'export default {';
     let autoImportContents = '';
     let hasLazyControllers = false;
@@ -40,7 +40,14 @@ export default function createControllersModule(config) {
         for (const controllerName in config.controllers[packageName]) {
             const controllerReference = packageName + '/' + controllerName;
             // Normalize the controller name: remove the initial @ and use Stimulus format
-            const controllerNormalizedName = controllerReference.substr(1).replace(/_/g, '-').replace(/\//g, '--');
+
+            let controllerNormalizedName: string;
+            // allow a "default" controller which takes on the package name
+            if (controllerName === 'default') {
+                controllerNormalizedName = packageName.substr(1).replace(/_/g, '-').replace(/\//g, '--');
+            } else {
+                controllerNormalizedName = controllerReference.substr(1).replace(/_/g, '-').replace(/\//g, '--');
+            }
 
             // Find package config for the controller
             if ('undefined' === typeof packageConfig.symfony.controllers[controllerName]) {
