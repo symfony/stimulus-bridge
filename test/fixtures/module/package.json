@@ -10,6 +10,12 @@
                 "importedStyles": {
                     "@symfony/mock-module/dist/style.css": true
                 }
+            },
+            "mock_named": {
+                "main": "dist/named_controller.js",
+                "name": "custom_name",
+                "webpackMode": "eager",
+                "enabled": true
             }
         }
     }

@@ -14,6 +14,7 @@ import { startStimulusApp } from './dist/index';
 describe('startStimulusApp', () => {
     it('must start the app', async () => {
         const app = startStimulusApp();
+        app.debug = false;
 
         // Wait for controllers to be loaded
         await app.start();

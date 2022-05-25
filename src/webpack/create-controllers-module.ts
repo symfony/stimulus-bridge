@@ -39,8 +39,6 @@ export default function createControllersModule(config) {
 
         for (const controllerName in config.controllers[packageName]) {
             const controllerReference = packageName + '/' + controllerName;
-            // Normalize the controller name: remove the initial @ and use Stimulus format
-            const controllerNormalizedName = controllerReference.substr(1).replace(/_/g, '-').replace(/\//g, '--');
 
             // Find package config for the controller
             if ('undefined' === typeof packageConfig.symfony.controllers[controllerName]) {
@@ -83,6 +81,16 @@ new Promise((resolve, reject) => resolve({ default:
 ${generateLazyController(controllerMain, 6)}
   }))
                 `.trim();
+            }
+
+            // Normalize the controller name: remove the initial @ and use Stimulus format
+            let controllerNormalizedName = controllerReference.substr(1).replace(/_/g, '-').replace(/\//g, '--');
+            // allow the package or user config to override name
+            if ('undefined' !== typeof controllerPackageConfig.name) {
+                controllerNormalizedName = controllerPackageConfig.name;
+            }
+            if ('undefined' !== typeof controllerUserConfig.name) {
+                controllerNormalizedName = controllerUserConfig.name;
             }
 
             controllerContents += `\n  '${controllerNormalizedName}': ${moduleValueContents},`;
