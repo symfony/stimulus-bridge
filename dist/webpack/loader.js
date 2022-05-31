@@ -49,7 +49,6 @@ function createControllersModule(config) {
         }
         for (const controllerName in config.controllers[packageName]) {
             const controllerReference = packageName + '/' + controllerName;
-            const controllerNormalizedName = controllerReference.substr(1).replace(/_/g, '-').replace(/\//g, '--');
             if ('undefined' === typeof packageConfig.symfony.controllers[controllerName]) {
                 throw new Error('Controller "' + controllerReference + '" does not exist in the package and cannot be compiled.');
             }
@@ -77,6 +76,13 @@ new Promise((resolve, reject) => resolve({ default:
 ${generateLazyController(controllerMain, 6)}
   }))
                 `.trim();
+            }
+            let controllerNormalizedName = controllerReference.substr(1).replace(/_/g, '-').replace(/\//g, '--');
+            if ('undefined' !== typeof controllerPackageConfig.name) {
+                controllerNormalizedName = controllerPackageConfig.name;
+            }
+            if ('undefined' !== typeof controllerUserConfig.name) {
+                controllerNormalizedName = controllerUserConfig.name;
             }
             controllerContents += `\n  '${controllerNormalizedName}': ${moduleValueContents},`;
             for (const autoimport in controllerUserConfig.autoimport || []) {
