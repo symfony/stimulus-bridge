@@ -79,10 +79,10 @@ ${generateLazyController(controllerMain, 6)}
             }
             let controllerNormalizedName = controllerReference.substr(1).replace(/_/g, '-').replace(/\//g, '--');
             if ('undefined' !== typeof controllerPackageConfig.name) {
-                controllerNormalizedName = controllerPackageConfig.name;
+                controllerNormalizedName = controllerPackageConfig.name.replace(/\//g, '--');
             }
             if ('undefined' !== typeof controllerUserConfig.name) {
-                controllerNormalizedName = controllerUserConfig.name;
+                controllerNormalizedName = controllerUserConfig.name.replace(/\//g, '--');
             }
             controllerContents += `\n  '${controllerNormalizedName}': ${moduleValueContents},`;
             for (const autoimport in controllerUserConfig.autoimport || []) {

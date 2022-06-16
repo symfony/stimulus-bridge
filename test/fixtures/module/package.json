@@ -13,7 +13,7 @@
             },
             "mock_named": {
                 "main": "dist/named_controller.js",
-                "name": "custom_name",
+                "name": "foo/custom_name",
                 "webpackMode": "eager",
                 "enabled": true
             }

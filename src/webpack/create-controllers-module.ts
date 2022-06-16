@@ -11,7 +11,7 @@
 
 import generateLazyController from './generate-lazy-controller';
 
-export default function createControllersModule(config) {
+export default function createControllersModule(config: any) {
     let controllerContents = 'export default {';
     let autoImportContents = '';
     let hasLazyControllers = false;
@@ -87,10 +87,10 @@ ${generateLazyController(controllerMain, 6)}
             let controllerNormalizedName = controllerReference.substr(1).replace(/_/g, '-').replace(/\//g, '--');
             // allow the package or user config to override name
             if ('undefined' !== typeof controllerPackageConfig.name) {
-                controllerNormalizedName = controllerPackageConfig.name;
+                controllerNormalizedName = controllerPackageConfig.name.replace(/\//g, '--');
             }
             if ('undefined' !== typeof controllerUserConfig.name) {
-                controllerNormalizedName = controllerUserConfig.name;
+                controllerNormalizedName = controllerUserConfig.name.replace(/\//g, '--');
             }
 
             controllerContents += `\n  '${controllerNormalizedName}': ${moduleValueContents},`;

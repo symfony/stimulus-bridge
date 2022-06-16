@@ -105,21 +105,21 @@ export default {
     });
 
     describe('load-named-controller.json', () => {
-        it('must register the custom name from package.json', () => {
+        it('must register the custom name from package\'s package.json', () => {
             // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/load-named-controller.json');
             expect(createControllersModule(config).finalSource).toEqual(
-                "export default {\n  'custom_name': import(/* webpackMode: \"eager\" */ '@symfony/mock-module/dist/named_controller.js'),\n};"
+                "export default {\n  'foo--custom_name': import(/* webpackMode: \"eager\" */ '@symfony/mock-module/dist/named_controller.js'),\n};"
             );
         });
     });
 
     describe('override-name.json', () => {
-        it('must return file with no autoimport', () => {
+        it('must use the overridden "name" from user\'s config', () => {
             // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/override-name.json');
             expect(createControllersModule(config).finalSource).toEqual(
-                "export default {\n  'overridden_name': import(/* webpackMode: \"eager\" */ '@symfony/mock-module/dist/controller.js'),\n};"
+                "export default {\n  'foo--overridden_name': import(/* webpackMode: \"eager\" */ '@symfony/mock-module/dist/controller.js'),\n};"
             );
         });
     });

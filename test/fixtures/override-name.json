@@ -2,7 +2,7 @@
     "controllers": {
         "@symfony/mock-module": {
             "mock": {
-                "name": "overridden_name",
+                "name": "foo/overridden_name",
                 "fetch": "eager",
                 "enabled": true
             }
