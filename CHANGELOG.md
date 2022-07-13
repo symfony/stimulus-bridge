@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.2.0
+
+* Allow the controller name to be overridden by the package or user. See #70.
+
+* Moved TypeScript types into the package. See #55.
+
 ## 3.1.0
 
 * Automatically enabled Stimulus's "debug" mode when doing a dev build. You will
