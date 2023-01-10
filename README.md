@@ -266,8 +266,8 @@ const app = startStimulusApp(require.context(
 ));
 
 // the normal way to manually register controllers
-application.register('clipboard', Clipboard)
-application.register('autocomplete', Autocomplete)
+app.register('clipboard', Clipboard);
+app.register('autocomplete', Autocomplete);
 
 export { app };
 ```
