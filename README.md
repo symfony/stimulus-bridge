@@ -9,8 +9,6 @@ automatically when you install [Symfony UX Packages](https://github.com/symfony/
 Before you start, familiarize yourself with the basics of
 [Stimulus](https://stimulus.hotwired.dev/).
 
-Symfony UX Stimulus bridge is currently considered **experimental**.
-
 ## Installation
 
 If you don't already have Webpack Encore installed, install it with:

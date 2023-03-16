@@ -41,9 +41,7 @@ function startStimulusApp(context) {
         if (!symfonyControllers.hasOwnProperty(controllerName)) {
             continue;
         }
-        symfonyControllers[controllerName].then((module) => {
-            application.register(controllerName, module.default);
-        });
+        application.register(controllerName, symfonyControllers[controllerName]);
     }
     return application;
 }

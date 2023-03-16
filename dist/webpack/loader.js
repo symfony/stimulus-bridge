@@ -8,37 +8,35 @@ var LoaderDependency__default = /*#__PURE__*/_interopDefaultLegacy(LoaderDepende
 
 function generateLazyController (controllerPath, indentationSpaces, exportName = 'default') {
     const spaces = ' '.repeat(indentationSpaces);
-    return `${spaces}(function() {
-${spaces}    return class LazyController extends Controller {
-${spaces}        constructor(context) {
-${spaces}            super(context);
-${spaces}            this.__stimulusLazyController = true;
-${spaces}        }
-${spaces}        initialize() {
-${spaces}            if (this.application.controllers.find((controller) => {
-${spaces}                return controller.identifier === this.identifier && controller.__stimulusLazyController;
-${spaces}            })) {
-${spaces}                return;
-${spaces}            }
-${spaces}            import('${controllerPath.replace(/\\/g, '\\\\')}').then((controller) => {
-${spaces}                this.application.register(this.identifier, controller.${exportName});
-${spaces}            });
-${spaces}        }
+    return `class extends Controller {
+${spaces}    constructor(context) {
+${spaces}        super(context);
+${spaces}        this.__stimulusLazyController = true;
 ${spaces}    }
-${spaces}})()`;
+${spaces}    initialize() {
+${spaces}        if (this.application.controllers.find((controller) => {
+${spaces}            return controller.identifier === this.identifier && controller.__stimulusLazyController;
+${spaces}        })) {
+${spaces}            return;
+${spaces}        }
+${spaces}        import('${controllerPath.replace(/\\/g, '\\\\')}').then((controller) => {
+${spaces}            this.application.register(this.identifier, controller.${exportName});
+${spaces}        });
+${spaces}    }
+${spaces}}`;
 }
 
 function createControllersModule(config) {
     let controllerContents = 'export default {';
-    let autoImportContents = '';
+    let importStatementContents = '';
     let hasLazyControllers = false;
-    const deprecations = [];
     if ('undefined' !== typeof config['placeholder']) {
         throw new Error('Your controllers.json file was not found. Be sure to add a Webpack alias from "@symfony/stimulus-bridge/controllers.json" to *your* controllers.json file.');
     }
     if ('undefined' === typeof config['controllers']) {
         throw new Error('Your Stimulus configuration file (assets/controllers.json) lacks a "controllers" key.');
     }
+    let controllerIndex = 0;
     for (const packageName in config.controllers) {
         let packageConfig;
         try {
@@ -58,24 +56,19 @@ function createControllersModule(config) {
                 continue;
             }
             const controllerMain = packageName + '/' + controllerPackageConfig.main;
-            let fetchMode = 'eager';
-            if ('undefined' !== typeof controllerUserConfig.webpackMode) {
-                deprecations.push('The "webpackMode" config key is deprecated in controllers.json. Use "fetch" instead, set to either "eager" or "lazy".');
+            let fetchMode = controllerUserConfig.fetch || 'eager';
+            let moduleValueContents = ``;
+            if (fetchMode === 'eager') {
+                const controllerNameForVariable = `controller_${controllerIndex++}`;
+                importStatementContents += `import ${controllerNameForVariable} from '${controllerMain}';\n`;
+                moduleValueContents = controllerNameForVariable;
             }
-            if ('undefined' !== typeof controllerUserConfig.fetch) {
-                if (!['eager', 'lazy'].includes(controllerUserConfig.fetch)) {
-                    throw new Error(`Invalid "fetch" value "${controllerUserConfig.fetch}" in controllers.json. Expected "eager" or "lazy".`);
-                }
-                fetchMode = controllerUserConfig.fetch;
-            }
-            let moduleValueContents = `import(/* webpackMode: "eager" */ '${controllerMain}')`;
-            if (fetchMode === 'lazy') {
+            else if (fetchMode === 'lazy') {
                 hasLazyControllers = true;
-                moduleValueContents = `
-new Promise((resolve, reject) => resolve({ default:
-${generateLazyController(controllerMain, 6)}
-  }))
-                `.trim();
+                moduleValueContents = generateLazyController(controllerMain, 2);
+            }
+            else {
+                throw new Error(`Invalid fetch mode "${fetchMode}" in controllers.json. Expected "eager" or "lazy".`);
             }
             let controllerNormalizedName = controllerReference.substr(1).replace(/_/g, '-').replace(/\//g, '--');
             if ('undefined' !== typeof controllerPackageConfig.name) {
@@ -87,7 +80,7 @@ ${generateLazyController(controllerMain, 6)}
             controllerContents += `\n  '${controllerNormalizedName}': ${moduleValueContents},`;
             for (const autoimport in controllerUserConfig.autoimport || []) {
                 if (controllerUserConfig.autoimport[autoimport]) {
-                    autoImportContents += "import '" + autoimport + "';\n";
+                    importStatementContents += "import '" + autoimport + "';\n";
                 }
             }
         }
@@ -96,8 +89,8 @@ ${generateLazyController(controllerMain, 6)}
         controllerContents = `import { Controller } from '@hotwired/stimulus';\n${controllerContents}`;
     }
     return {
-        finalSource: `${autoImportContents}${controllerContents}\n};`,
-        deprecations,
+        finalSource: `${importStatementContents}${controllerContents}\n};`,
+        deprecations: [],
     };
 }
 
