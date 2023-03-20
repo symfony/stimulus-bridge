@@ -33,7 +33,7 @@ describe('createControllersModule', () => {
             // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/disabled-autoimport.json');
             expect(createControllersModule(config).finalSource).toEqual(
-                "export default {\n  'symfony--mock-module--mock': import(/* webpackMode: \"eager\" */ '@symfony/mock-module/dist/controller.js'),\n};"
+                "import controller_0 from '@symfony/mock-module/dist/controller.js';\nexport default {\n  'symfony--mock-module--mock': controller_0,\n};"
             );
         });
     });
@@ -43,20 +43,8 @@ describe('createControllersModule', () => {
             // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/eager-no-autoimport.json');
             expect(createControllersModule(config).finalSource).toEqual(
-                "export default {\n  'symfony--mock-module--mock': import(/* webpackMode: \"eager\" */ '@symfony/mock-module/dist/controller.js'),\n};"
+                "import controller_0 from '@symfony/mock-module/dist/controller.js';\nexport default {\n  'symfony--mock-module--mock': controller_0,\n};"
             );
-        });
-    });
-
-    describe('deprecated-webpack-mode.json', () => {
-        it('must return eager mode with deprecation', () => {
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
-            const config = require('../fixtures/deprecated-webpack-mode.json');
-            const result = createControllersModule(config);
-            expect(result.finalSource).toEqual(
-                "export default {\n  'symfony--mock-module--mock': import(/* webpackMode: \"eager\" */ '@symfony/mock-module/dist/controller.js'),\n};"
-            );
-            expect(result.deprecations).toHaveLength(1);
         });
     });
 
@@ -65,7 +53,7 @@ describe('createControllersModule', () => {
             // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/eager-autoimport.json');
             expect(createControllersModule(config).finalSource).toEqual(
-                "import '@symfony/mock-module/dist/style.css';\nexport default {\n  'symfony--mock-module--mock': import(/* webpackMode: \"eager\" */ '@symfony/mock-module/dist/controller.js'),\n};"
+                "import controller_0 from '@symfony/mock-module/dist/controller.js';\nimport '@symfony/mock-module/dist/style.css';\nexport default {\n  'symfony--mock-module--mock': controller_0,\n};"
             );
         });
     });
@@ -78,26 +66,22 @@ describe('createControllersModule', () => {
                 `
 import { Controller } from '@hotwired/stimulus';
 export default {
-  'symfony--mock-module--mock': new Promise((resolve, reject) => resolve({ default:
-      (function() {
-          return class LazyController extends Controller {
-              constructor(context) {
-                  super(context);
-                  this.__stimulusLazyController = true;
-              }
-              initialize() {
-                  if (this.application.controllers.find((controller) => {
-                      return controller.identifier === this.identifier && controller.__stimulusLazyController;
-                  })) {
-                      return;
-                  }
-                  import('@symfony/mock-module/dist/controller.js').then((controller) => {
-                      this.application.register(this.identifier, controller.default);
-                  });
-              }
+  'symfony--mock-module--mock': class extends Controller {
+      constructor(context) {
+          super(context);
+          this.__stimulusLazyController = true;
+      }
+      initialize() {
+          if (this.application.controllers.find((controller) => {
+              return controller.identifier === this.identifier && controller.__stimulusLazyController;
+          })) {
+              return;
           }
-      })()
-  })),
+          import('@symfony/mock-module/dist/controller.js').then((controller) => {
+              this.application.register(this.identifier, controller.default);
+          });
+      }
+  },
 };
                 `.trim()
             );
@@ -109,7 +93,7 @@ export default {
             // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/load-named-controller.json');
             expect(createControllersModule(config).finalSource).toEqual(
-                "export default {\n  'foo--custom_name': import(/* webpackMode: \"eager\" */ '@symfony/mock-module/dist/named_controller.js'),\n};"
+                "import controller_0 from '@symfony/mock-module/dist/named_controller.js';\nexport default {\n  'foo--custom_name': controller_0,\n};"
             );
         });
     });
@@ -119,7 +103,7 @@ export default {
             // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/override-name.json');
             expect(createControllersModule(config).finalSource).toEqual(
-                "export default {\n  'foo--overridden_name': import(/* webpackMode: \"eager\" */ '@symfony/mock-module/dist/controller.js'),\n};"
+                "import controller_0 from '@symfony/mock-module/dist/controller.js';\nexport default {\n  'foo--overridden_name': controller_0,\n};"
             );
         });
     });

@@ -13,9 +13,8 @@ import generateLazyController from './generate-lazy-controller';
 
 export default function createControllersModule(config: any) {
     let controllerContents = 'export default {';
-    let autoImportContents = '';
+    let importStatementContents = '';
     let hasLazyControllers = false;
-    const deprecations = [];
 
     if ('undefined' !== typeof config['placeholder']) {
         throw new Error(
@@ -27,6 +26,7 @@ export default function createControllersModule(config: any) {
         throw new Error('Your Stimulus configuration file (assets/controllers.json) lacks a "controllers" key.');
     }
 
+    let controllerIndex = 0;
     for (const packageName in config.controllers) {
         let packageConfig;
         try {
@@ -55,32 +55,20 @@ export default function createControllersModule(config: any) {
             }
 
             const controllerMain = packageName + '/' + controllerPackageConfig.main;
-            let fetchMode = 'eager';
+            let fetchMode = controllerUserConfig.fetch || 'eager';
 
-            if ('undefined' !== typeof controllerUserConfig.webpackMode) {
-                deprecations.push(
-                    'The "webpackMode" config key is deprecated in controllers.json. Use "fetch" instead, set to either "eager" or "lazy".'
-                );
-            }
+            let moduleValueContents = ``;
+            if (fetchMode === 'eager') {
+                const controllerNameForVariable = `controller_${controllerIndex++}`;
+                importStatementContents += `import ${controllerNameForVariable} from '${controllerMain}';\n`;
 
-            if ('undefined' !== typeof controllerUserConfig.fetch) {
-                if (!['eager', 'lazy'].includes(controllerUserConfig.fetch)) {
-                    throw new Error(
-                        `Invalid "fetch" value "${controllerUserConfig.fetch}" in controllers.json. Expected "eager" or "lazy".`
-                    );
-                }
-
-                fetchMode = controllerUserConfig.fetch;
-            }
-
-            let moduleValueContents = `import(/* webpackMode: "eager" */ '${controllerMain}')`;
-            if (fetchMode === 'lazy') {
+                // simply use the imported controller
+                moduleValueContents = controllerNameForVariable;
+            } else if (fetchMode === 'lazy') {
                 hasLazyControllers = true;
-                moduleValueContents = `
-new Promise((resolve, reject) => resolve({ default:
-${generateLazyController(controllerMain, 6)}
-  }))
-                `.trim();
+                moduleValueContents = generateLazyController(controllerMain, 2);
+            } else {
+                throw new Error(`Invalid fetch mode "${fetchMode}" in controllers.json. Expected "eager" or "lazy".`);
             }
 
             // Normalize the controller name: remove the initial @ and use Stimulus format
@@ -97,7 +85,7 @@ ${generateLazyController(controllerMain, 6)}
 
             for (const autoimport in controllerUserConfig.autoimport || []) {
                 if (controllerUserConfig.autoimport[autoimport]) {
-                    autoImportContents += "import '" + autoimport + "';\n";
+                    importStatementContents += "import '" + autoimport + "';\n";
                 }
             }
         }
@@ -108,7 +96,7 @@ ${generateLazyController(controllerMain, 6)}
     }
 
     return {
-        finalSource: `${autoImportContents}${controllerContents}\n};`,
-        deprecations,
+        finalSource: `${importStatementContents}${controllerContents}\n};`,
+        deprecations: [],
     };
 }

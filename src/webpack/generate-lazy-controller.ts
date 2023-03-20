@@ -18,22 +18,20 @@
 export default function(controllerPath: string, indentationSpaces: number, exportName = 'default') {
     const spaces = ' '.repeat(indentationSpaces);
 
-    return `${spaces}(function() {
-${spaces}    return class LazyController extends Controller {
-${spaces}        constructor(context) {
-${spaces}            super(context);
-${spaces}            this.__stimulusLazyController = true;
-${spaces}        }
-${spaces}        initialize() {
-${spaces}            if (this.application.controllers.find((controller) => {
-${spaces}                return controller.identifier === this.identifier && controller.__stimulusLazyController;
-${spaces}            })) {
-${spaces}                return;
-${spaces}            }
-${spaces}            import('${controllerPath.replace(/\\/g, '\\\\')}').then((controller) => {
-${spaces}                this.application.register(this.identifier, controller.${exportName});
-${spaces}            });
-${spaces}        }
+    return `class extends Controller {
+${spaces}    constructor(context) {
+${spaces}        super(context);
+${spaces}        this.__stimulusLazyController = true;
 ${spaces}    }
-${spaces}})()`;
+${spaces}    initialize() {
+${spaces}        if (this.application.controllers.find((controller) => {
+${spaces}            return controller.identifier === this.identifier && controller.__stimulusLazyController;
+${spaces}        })) {
+${spaces}            return;
+${spaces}        }
+${spaces}        import('${controllerPath.replace(/\\/g, '\\\\')}').then((controller) => {
+${spaces}            this.application.register(this.identifier, controller.${exportName});
+${spaces}        });
+${spaces}    }
+${spaces}}`;
 }

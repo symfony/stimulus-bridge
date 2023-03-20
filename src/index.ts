@@ -34,9 +34,7 @@ export function startStimulusApp(context: __WebpackModuleApi.RequireContext) {
             continue;
         }
 
-        symfonyControllers[controllerName].then((module: any) => {
-            application.register(controllerName, module.default);
-        });
+        application.register(controllerName, symfonyControllers[controllerName]);
     }
 
     return application;
