@@ -42,4 +42,12 @@ describe('getStimulusCommentOptions', () => {
             errors: [],
         });
     });
+
+    it('parses source with static properties', () => {
+        const src = '/* stimulusFetch: "lazy" */ export default class extends Controller { static targets = []; }';
+        expect(getStimulusCommentOptions(src)).toEqual({
+            options: { stimulusFetch: 'lazy' },
+            errors: [],
+        });
+    });
 });
