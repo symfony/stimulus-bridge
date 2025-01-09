@@ -1,0 +1,192 @@
+---------------------------------------------------------------------------
+
+by Kocal at 2025-01-06T09:05:14Z
+
+![image](https://github.com/user-attachments/assets/f6904d9d-04c0-46cc-b97c-6a49e90754fc)
+Node.js 10 and Node.js 12 jobs are failing because `pretty-format@29.7.0` is incompatible with `node < 14.15.0`:
+- `error pretty-format@29.7.0: The engine "node" is incompatible with this module. Expected version "^14.15.0 || ^16.10.0 || >=18.0.0". Got "10.24.1"`
+- `error pretty-format@29.7.0: The engine "node" is incompatible with this module. Expected version "^14.15.0 || ^16.10.0 || >=18.0.0". Got "12.22.12"`
+
+`yarn why pretty-format`:
+```
+➜  symfony-stimulus-bridge git:(imp-ci-node-versions) yarn why pretty-format
+yarn why v1.22.22
+[1/4] 🤔  Why do we have the module "pretty-format"...?
+[2/4] 🚚  Initialising dependency graph...
+[3/4] 🔍  Finding dependency...
+[4/4] 🚡  Calculating file sizes...
+=> Found "pretty-format@26.6.2"
+info Has been hoisted to "pretty-format"
+info Reasons this module exists
+   - Hoisted from "jest-config#pretty-format"
+   - Hoisted from "jest-diff#pretty-format"
+   - Hoisted from "jest-validate#pretty-format"
+   - Hoisted from "@symfony#stimulus-testing#@testing-library#dom#pretty-format"
+   - Hoisted from "jest-config#jest-jasmine2#pretty-format"
+   - Hoisted from "jest-runner#jest-leak-detector#pretty-format"
+   - Hoisted from "@jest#console#jest-message-util#pretty-format"
+   - Hoisted from "@jest#core#jest-message-util#pretty-format"
+   - Hoisted from "@jest#fake-timers#jest-message-util#pretty-format"
+   - Hoisted from "jest-runner#jest-message-util#pretty-format"
+   - Hoisted from "@jest#core#jest-snapshot#pretty-format"
+   - Hoisted from "jest-config#jest-jasmine2#jest-each#pretty-format"
+   - Hoisted from "jest-config#jest-jasmine2#jest-matcher-utils#pretty-format"
+   - Hoisted from "@jest#core#jest-snapshot#jest-matcher-utils#pretty-format"
+   - Hoisted from "jest-config#jest-jasmine2#jest-message-util#pretty-format"
+   - Hoisted from "jest-config#jest-jasmine2#jest-snapshot#pretty-format"
+   - Hoisted from "@jest#core#jest-resolve-dependencies#jest-snapshot#pretty-format"
+   - Hoisted from "jest-runner#jest-runtime#jest-snapshot#pretty-format"
+   - Hoisted from "@jest#core#jest-resolve-dependencies#jest-snapshot#jest-matcher-utils#pretty-format"
+   - Hoisted from "jest-runner#jest-runtime#jest-snapshot#jest-matcher-utils#pretty-format"
+   - Hoisted from "jest-config#@jest#test-sequencer#jest-runtime#jest-message-util#pretty-format"
+   - Hoisted from "@jest#core#jest-resolve-dependencies#jest-snapshot#jest-message-util#pretty-format"
+   - Hoisted from "jest-config#@jest#test-sequencer#jest-runtime#jest-snapshot#pretty-format"
+   - Hoisted from "jest-config#@jest#test-sequencer#jest-runtime#jest-snapshot#jest-matcher-utils#pretty-format"
+info Disk size without dependencies: "152KB"
+info Disk size with unique dependencies: "332KB"
+info Disk size with transitive dependencies: "3.16MB"
+info Number of shared dependencies: 13
+=> Found "jest-each#pretty-format@27.5.1"
+info This module exists because "jest-each" depends on it.
+info Disk size without dependencies: "156KB"
+info Disk size with unique dependencies: "260KB"
+info Disk size with transitive dependencies: "324KB"
+info Number of shared dependencies: 4
+=> Found "jest-matcher-utils#pretty-format@27.5.1"
+info Reasons this module exists
+   - "jest-matcher-utils" depends on it
+   - Hoisted from "jest-matcher-utils#jest-diff#pretty-format"
+info Disk size without dependencies: "156KB"
+info Disk size with unique dependencies: "260KB"
+info Disk size with transitive dependencies: "324KB"
+info Number of shared dependencies: 4
+=> Found "jest-message-util#pretty-format@27.5.1"
+info This module exists because "jest-message-util" depends on it.
+info Disk size without dependencies: "156KB"
+info Disk size with unique dependencies: "260KB"
+info Disk size with transitive dependencies: "324KB"
+info Number of shared dependencies: 4
+=> Found "jest-snapshot#pretty-format@27.5.1"
+info Reasons this module exists
+   - "jest-snapshot" depends on it
+   - Hoisted from "jest-snapshot#jest-diff#pretty-format"
+info Disk size without dependencies: "156KB"
+info Disk size with unique dependencies: "260KB"
+info Disk size with transitive dependencies: "324KB"
+info Number of shared dependencies: 4
+=> Found "jest#pretty-format@27.5.1"
+info Reasons this module exists
+   - "jest#@jest#core#jest-config" depends on it
+   - Hoisted from "jest#@jest#core#jest-config#pretty-format"
+   - Hoisted from "jest#@jest#core#jest-validate#pretty-format"
+   - Hoisted from "jest#@jest#core#jest-config#jest-jasmine2#pretty-format"
+   - Hoisted from "jest#@jest#core#jest-runner#jest-leak-detector#pretty-format"
+info Disk size without dependencies: "156KB"
+info Disk size with unique dependencies: "260KB"
+info Disk size with transitive dependencies: "324KB"
+info Number of shared dependencies: 4
+=> Found "jest-cli#pretty-format@27.5.1"
+info Reasons this module exists
+   - "jest#jest-cli#jest-config" depends on it
+   - Hoisted from "jest#jest-cli#jest-config#pretty-format"
+   - Hoisted from "jest#jest-cli#jest-validate#pretty-format"
+   - Hoisted from "jest#jest-cli#jest-config#jest-jasmine2#pretty-format"
+   - Hoisted from "jest#jest-cli#@jest#core#jest-runner#jest-leak-detector#pretty-format"
+info Disk size without dependencies: "156KB"
+info Disk size with unique dependencies: "260KB"
+info Disk size with transitive dependencies: "324KB"
+info Number of shared dependencies: 4
+=> Found "jest-runtime#pretty-format@27.5.1"
+info Reasons this module exists
+   - "jest-runtime#jest-resolve#jest-validate" depends on it
+   - Hoisted from "jest-runtime#jest-resolve#jest-validate#pretty-format"
+info Disk size without dependencies: "156KB"
+info Disk size with unique dependencies: "260KB"
+info Disk size with transitive dependencies: "324KB"
+info Number of shared dependencies: 4
+=> Found "jest-circus#pretty-format@27.5.1"
+info This module exists because "jest#@jest#core#jest-config#jest-circus" depends on it.
+info Disk size without dependencies: "156KB"
+info Disk size with unique dependencies: "260KB"
+info Disk size with transitive dependencies: "324KB"
+info Number of shared dependencies: 4
+=> Found "@types/jest#pretty-format@29.7.0"
+info Reasons this module exists
+   - "@symfony#stimulus-testing#@testing-library#jest-dom#@types#testing-library__jest-dom#@types#jest" depends on it
+   - Hoisted from "@symfony#stimulus-testing#@testing-library#jest-dom#@types#testing-library__jest-dom#@types#jest#expect#jest-matcher-utils#pretty-format"
+   - Hoisted from "@symfony#stimulus-testing#@testing-library#jest-dom#@types#testing-library__jest-dom#@types#jest#expect#jest-message-util#pretty-format"
+   - Hoisted from "@symfony#stimulus-testing#@testing-library#jest-dom#@types#testing-library__jest-dom#@types#jest#expect#jest-matcher-utils#jest-diff#pretty-format"
+info Disk size without dependencies: "108KB"
+info Disk size with unique dependencies: "216KB"
+info Disk size with transitive dependencies: "836KB"
+info Number of shared dependencies: 4
+✨  Done in 0.23s.
+```
+
+Given the `yarn why`:
+- `pretty-format@29.7.0` is installed because of `@types/testing-library__jest-dom@^5.9.1`
+- which requires `@types/jest@*`
+- which requires `pretty-format@29.7.0`:
+- and `@types/testing-library` is required by `@testing-library/jest-dom` which is required by https://github.com/symfony/stimulus-testing 😕
+
+Off-topic:
+> I'm absolutely not a fan of this kind of library that pack pinned and opinionated dependencies, I have some experience with that and it's a hell to maintain and to use in other projects.
+> I will see what I do with `@symfony/stimulus-testing`, but I will surely remove dependencies on Babel and Jest
+
+---------------------------------------------------------------------------
+
+by Kocal at 2025-01-09T07:07:13Z
+
+And now, it's:
+- Node.js 10: `error @typescript-eslint/eslint-plugin@5.62.0: The engine "node" is incompatible with this module. Expected version "^12.22.0 || ^14.17.0 || >=16.0.0". Got "10.24.1"`
+- Node.js 12: test can't be executed
+```
+FAIL test/index.test.ts
+  ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    /home/runner/work/stimulus-bridge/stimulus-bridge/node_modules/@adobe/css-tools/dist/index.cjs:122
+                }, options?.source || '');
+                           ^
+
+    SyntaxError: Unexpected token '.'
+
+      10 | 'use strict';
+      11 |
+    > 12 | import '@symfony/stimulus-testing/setup';
+         | ^
+      13 |
+
+      at Runtime.createScriptFromCode (node_modules/jest-runtime/build/index.js:1728:14)
+      at Object.<anonymous> (node_modules/@testing-library/jest-dom/dist/utils.js:21:17)
+      at Object.<anonymous> (node_modules/@testing-library/jest-dom/dist/to-be-in-the-dom.js:7:14)
+      at Object.<anonymous> (node_modules/@testing-library/jest-dom/dist/matchers.js:168:21)
+      at Object.<anonymous> (node_modules/@testing-library/jest-dom/dist/extend-expect.js:3:42)
+      at Object.<anonymous> (node_modules/@testing-library/jest-dom/dist/index.js:3:1)
+      at Object.<anonymous> (node_modules/@symfony/stimulus-testing/src/setup.js:14:1)
+      at Object.<anonymous> (node_modules/@symfony/stimulus-testing/setup.js:1:83)
+      at Object.<anonymous> (test/setup.js:12:1)
+```
+
+Let's drop support of Node.js 10 and 12, it's 2025, and these versions have not been supported (either by the Node.js team, or by the ecosystem) for years.
