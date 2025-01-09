@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## 3.3.3
+
+* Add missing `@babel/plugin-proposal-class-properties` dev dependency by @Kocal in https://github.com/symfony/stimulus-bridge/pull/92
+* Fix lazy-controller detection when controller contain static properties (update `acorn` ECMAScript version) by @ameotoko in https://github.com/symfony/stimulus-bridge/pull/93
+
+## 3.2.3
+
+* [Bug] Removing unnecessary Promise in object of controllers to be loaded. See #81.
+
+* Fix README: registering lazy controllers in bootstrap.js. See #76.
+
+## 3.2.1
+
+* Normalizing custom names "/" to "--" like normal controller names. See #72.
+
 ## 3.2.0
 
 * Allow the controller name to be overridden by the package or user. See #70.
