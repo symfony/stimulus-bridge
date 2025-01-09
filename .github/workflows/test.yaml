@@ -17,10 +17,23 @@ jobs:
                   yarn run check-format
 
     tests:
+        name: Tests (Node.js ${{ matrix.node-versions }})
         runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                node-versions: [ '14', '16', '18', '20', '22', '23' ]
         steps:
-            - uses: actions/checkout@master
-            - name: Install dependencies
-              run: yarn
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Node ${{matrix.node-versions}}
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{matrix.node-versions}}
+
+            - name: Install Yarn Dependencies
+              run: yarn install
+
             - name: Tests
               run: yarn test
