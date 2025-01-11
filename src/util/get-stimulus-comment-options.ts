@@ -7,10 +7,8 @@
  * file that was distributed with this source code.
  */
 
-'use strict';
-
-import { Comment, parse } from 'acorn';
-import vm from 'vm';
+import vm from 'node:vm';
+import { type Comment, parse } from 'acorn';
 
 const stimulusCommentRegExp = new RegExp(/(^|\W)stimulus[A-Z]{1,}[A-Za-z]{1,}:/);
 
@@ -19,7 +17,7 @@ const EMPTY_COMMENT_OPTIONS = {
     errors: [],
 };
 
-function getCommentsFromSource(source: string) {
+function getCommentsFromSource(source: string): Comment[] {
     const comments: Comment[] = [];
     parse(source, {
         onComment: comments,
@@ -34,7 +32,7 @@ function getCommentsFromSource(source: string) {
  * Inspired by Webpack's JavaScriptParser
  */
 export default function (source: string) {
-    let comments;
+    let comments: Comment[] = [];
     try {
         comments = getCommentsFromSource(source);
     } catch (e) {

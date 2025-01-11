@@ -7,11 +7,9 @@
  * file that was distributed with this source code.
  */
 
-'use strict';
-
-import generateLazyController from '../../src/webpack/generate-lazy-controller';
 import { parse } from '@babel/parser';
 import { isNode } from '@babel/types';
+import generateLazyController from '../../src/webpack/generate-lazy-controller';
 
 const wrapLazyController = (controllerString: string): string => {
     return `
@@ -25,12 +23,15 @@ const wrapLazyController = (controllerString: string): string => {
 describe('generateLazyControllerModule', () => {
     describe('generateLazyController()', () => {
         it('must return a functional ES6 class', () => {
-            const controllerCode = wrapLazyController(generateLazyController('@symfony/some-module/dist/controller.js', 0));
+            const controllerCode = wrapLazyController(
+                generateLazyController('@symfony/some-module/dist/controller.js', 0)
+            );
             const result = parse(controllerCode, {
                 sourceType: 'module',
             });
             expect(isNode(result)).toBeTruthy();
 
+            // biome-ignore lint/security/noGlobalEval: We need to eval the code to test it
             const lazyControllerClass = eval(`${controllerCode}`);
             // if all goes correctly, the prototype should have a Controller key
             expect(Object.getPrototypeOf(lazyControllerClass)).toHaveProperty('targets');
@@ -54,14 +55,14 @@ describe('generateLazyControllerModule', () => {
         });
 
         it('must use the correct, named export', () => {
-            const controllerCode = wrapLazyController(generateLazyController('@symfony/some-module/dist/controller.js', 0, 'CustomController'));
+            const controllerCode = wrapLazyController(
+                generateLazyController('@symfony/some-module/dist/controller.js', 0, 'CustomController')
+            );
             const result = parse(controllerCode, {
                 sourceType: 'module',
             });
             expect(isNode(result)).toBeTruthy();
-            expect(controllerCode).toContain(
-                'this.application.register(this.identifier, controller.CustomController)'
-            );
+            expect(controllerCode).toContain('this.application.register(this.identifier, controller.CustomController)');
         });
     });
 });

@@ -1,12 +1,10 @@
-const path = require('path');
+const path = require('node:path');
 
 module.exports = {
-    testRegex: "test/.*\\.test.ts",
+    testRegex: 'test/.*\\.test.ts',
     testEnvironment: 'jsdom',
-    setupFilesAfterEnv: [
-        path.join(__dirname, 'test/setup.js'),
-    ],
+    setupFilesAfterEnv: [path.join(__dirname, 'test/setup.js')],
     transform: {
-        '\\.(j|t)s$': ['babel-jest', { configFile: path.join(__dirname, './babel.config.js') }]
+        '\\.(j|t)s$': ['babel-jest', { configFile: path.join(__dirname, './babel.config.js') }],
     },
-}
+};

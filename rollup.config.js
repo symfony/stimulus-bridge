@@ -1,7 +1,7 @@
+import path from 'node:path';
+import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
-import path from 'path';
-import commonjs from '@rollup/plugin-commonjs';
 
 export default [
     /*
@@ -16,12 +16,9 @@ export default [
         external: [
             // avoids rollup from trying to parse this import
             './webpack/loader!@symfony/stimulus-bridge/controllers.json',
-            '@hotwired/stimulus'
+            '@hotwired/stimulus',
         ],
-        plugins: [
-            resolve(),
-            typescript(),
-        ],
+        plugins: [resolve(), typescript()],
     },
 
     /*
@@ -36,9 +33,7 @@ export default [
             file: path.join('dist', 'webpack', 'loader.js'),
             format: 'cjs',
         },
-        external: [
-            'webpack/lib/dependencies/LoaderDependency',
-        ],
+        external: ['webpack/lib/dependencies/LoaderDependency'],
         plugins: [
             resolve(),
             typescript(),
@@ -58,13 +53,7 @@ export default [
             file: path.join('dist', 'webpack', 'lazy-controller-loader.js'),
             format: 'cjs',
         },
-        external: [
-            'loader-utils',
-            'schema-utils',
-        ],
-        plugins: [
-            resolve(),
-            typescript(),
-        ],
+        external: ['loader-utils', 'schema-utils'],
+        plugins: [resolve(), typescript()],
     },
 ];

@@ -13,10 +13,8 @@
         "build": "yarn rollup -c",
         "build-types": "yarn tsc",
         "test": "yarn run webpack --config test/webpack.config.js && yarn run jest",
-        "lint": "yarn run eslint src test",
-        "format": "prettier src/*.ts test/*.js --write",
-        "check-lint": "yarn lint --no-fix",
-        "check-format": "yarn format --no-write --check"
+        "check": "biome check",
+        "ci": "biome ci"
     },
     "peerDependencies": {
         "@hotwired/stimulus": "^3.0"
@@ -33,20 +31,15 @@
         "@babel/plugin-proposal-class-properties": "^7.15.8",
         "@babel/preset-env": "^7.15.8",
         "@babel/preset-typescript": "^7.15.0",
+        "@biomejs/biome": "^1.9.4",
         "@hotwired/stimulus": "^3.0",
         "@rollup/plugin-commonjs": "^21.0.1",
         "@rollup/plugin-node-resolve": "^13.0.0",
         "@rollup/plugin-typescript": "^8.3.0",
         "@symfony/mock-module": "file:test/fixtures/module",
         "@symfony/stimulus-testing": "^2.0.0",
-        "@typescript-eslint/eslint-plugin": "^5.2.0",
-        "@typescript-eslint/parser": "^5.2.0",
         "babel-jest": "^27.3.1",
-        "eslint": "^8.1.0",
-        "eslint-config-prettier": "^8.0.0",
-        "eslint-plugin-jest": "^25.2.2",
         "jest": "^27.3.1",
-        "prettier": "^2.2.1",
         "rollup": "^2.52.2",
         "tslib": "^2.3.1",
         "typescript": "^4.4.4",
@@ -55,41 +48,6 @@
     },
     "resolutions": {
         "@types/jest": "^27.0"
-    },
-    "eslintConfig": {
-        "root": true,
-        "parser": "@typescript-eslint/parser",
-        "plugins": [
-            "@typescript-eslint"
-        ],
-        "extends": [
-            "eslint:recommended",
-            "prettier",
-            "plugin:@typescript-eslint/eslint-recommended",
-            "plugin:@typescript-eslint/recommended"
-        ],
-        "ignorePatterns": [
-            "test/dist/**",
-            "test/fixtures/**",
-            "test/webpack.config.js"
-        ],
-        "rules": {
-            "@typescript-eslint/no-explicit-any": "off",
-            "@typescript-eslint/ban-ts-comment": "off"
-        },
-        "env": {
-            "browser": true
-        },
-        "overrides": [
-            {
-                "files": [
-                    "test/**/*.ts"
-                ],
-                "extends": [
-                    "plugin:jest/recommended"
-                ]
-            }
-        ]
     },
     "files": [
         "src/",

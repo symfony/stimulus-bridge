@@ -7,8 +7,6 @@
  * file that was distributed with this source code.
  */
 
-'use strict';
-
 import lazyControllerLoader from '../../src/webpack/lazy-controller-loader';
 
 function callLoader(src: string, startingSourceMap = '', query = '') {

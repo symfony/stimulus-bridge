@@ -7,8 +7,6 @@
  * file that was distributed with this source code.
  */
 
-'use strict';
-
 import { Application } from '@hotwired/stimulus';
 import { definitionsFromContext } from '@hotwired/stimulus-webpack-helpers';
 
@@ -29,8 +27,7 @@ export function startStimulusApp(context: __WebpackModuleApi.RequireContext) {
     }
 
     for (const controllerName in symfonyControllers) {
-        // eslint-disable-next-line no-prototype-builtins
-        if (!symfonyControllers.hasOwnProperty(controllerName)) {
+        if (!Object.prototype.hasOwnProperty.call(symfonyControllers, controllerName)) {
             continue;
         }
 
