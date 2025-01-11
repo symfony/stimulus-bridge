@@ -1,4 +1,4 @@
-name: Symfony UX
+name: Test
 
 on:
     pull_request:
@@ -10,11 +10,18 @@ jobs:
     coding-style:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@master
-            - name: Prettier
-              run: |
-                  yarn
-                  yarn run check-format
+            - uses: actions/checkout@v4
+
+            - name: Install Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 14 # lowest supported version
+
+            - name: Install Yarn Dependencies
+              run: yarn install
+
+            - name: Run Biome
+              run: yarn run ci
 
     tests:
         name: Tests (Node.js ${{ matrix.node-versions }})
