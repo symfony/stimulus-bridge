@@ -7,12 +7,10 @@
  * file that was distributed with this source code.
  */
 
-'use strict';
-
-import generateLazyController from './generate-lazy-controller';
-import getStimulusCommentOptions from '../util/get-stimulus-comment-options';
 import * as loaderUtils from 'loader-utils';
 import * as schemaUtils from 'schema-utils';
+import getStimulusCommentOptions from '../util/get-stimulus-comment-options';
+import generateLazyController from './generate-lazy-controller';
 
 const schema = {
     type: 'object',

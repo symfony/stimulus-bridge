@@ -7,15 +7,13 @@
  * file that was distributed with this source code.
  */
 
-'use strict';
-
 /**
  *
  * @param {string} controllerPath The importable path to the controller
  * @param {Number} indentationSpaces Amount each line should be indented
  * @param {string} exportName The name of the module that's exported from the controller
  */
-export default function(controllerPath: string, indentationSpaces: number, exportName = 'default') {
+export default function (controllerPath: string, indentationSpaces: number, exportName = 'default') {
     const spaces = ' '.repeat(indentationSpaces);
 
     return `class extends Controller {

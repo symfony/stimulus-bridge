@@ -7,14 +7,11 @@
  * file that was distributed with this source code.
  */
 
-'use strict';
-
 import createControllersModule from '../../src/webpack/create-controllers-module';
 
 describe('createControllersModule', () => {
     describe('empty.json', () => {
         it('must return an empty file', () => {
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/empty.json');
             expect(createControllersModule(config).finalSource).toEqual('export default {\n};');
         });
@@ -22,7 +19,6 @@ describe('createControllersModule', () => {
 
     describe('disabled-controller.json', () => {
         it('must return an empty file', () => {
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/disabled-controller.json');
             expect(createControllersModule(config).finalSource).toEqual('export default {\n};');
         });
@@ -30,7 +26,6 @@ describe('createControllersModule', () => {
 
     describe('disabled-autoimport.json', () => {
         it('must return file with no autoimport', () => {
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/disabled-autoimport.json');
             expect(createControllersModule(config).finalSource).toEqual(
                 "import controller_0 from '@symfony/mock-module/dist/controller.js';\nexport default {\n  'symfony--mock-module--mock': controller_0,\n};"
@@ -40,7 +35,6 @@ describe('createControllersModule', () => {
 
     describe('eager-no-autoimport.json', () => {
         it('must return file with no autoimport', () => {
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/eager-no-autoimport.json');
             expect(createControllersModule(config).finalSource).toEqual(
                 "import controller_0 from '@symfony/mock-module/dist/controller.js';\nexport default {\n  'symfony--mock-module--mock': controller_0,\n};"
@@ -50,7 +44,6 @@ describe('createControllersModule', () => {
 
     describe('eager-autoimport.json', () => {
         it('must return a file with the enabled controller and auto-import', () => {
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/eager-autoimport.json');
             expect(createControllersModule(config).finalSource).toEqual(
                 "import controller_0 from '@symfony/mock-module/dist/controller.js';\nimport '@symfony/mock-module/dist/style.css';\nexport default {\n  'symfony--mock-module--mock': controller_0,\n};"
@@ -60,7 +53,6 @@ describe('createControllersModule', () => {
 
     describe('lazy-controller-no-autoimport.json', () => {
         it('must return a file with a lazy controller', () => {
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/lazy-no-autoimport.json');
             expect(createControllersModule(config).finalSource).toEqual(
                 `
@@ -89,8 +81,7 @@ export default {
     });
 
     describe('load-named-controller.json', () => {
-        it('must register the custom name from package\'s package.json', () => {
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
+        it("must register the custom name from package's package.json", () => {
             const config = require('../fixtures/load-named-controller.json');
             expect(createControllersModule(config).finalSource).toEqual(
                 "import controller_0 from '@symfony/mock-module/dist/named_controller.js';\nexport default {\n  'foo--custom_name': controller_0,\n};"
@@ -100,7 +91,6 @@ export default {
 
     describe('override-name.json', () => {
         it('must use the overridden "name" from user\'s config', () => {
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const config = require('../fixtures/override-name.json');
             expect(createControllersModule(config).finalSource).toEqual(
                 "import controller_0 from '@symfony/mock-module/dist/controller.js';\nexport default {\n  'foo--overridden_name': controller_0,\n};"

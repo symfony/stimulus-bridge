@@ -7,8 +7,6 @@
  * file that was distributed with this source code.
  */
 
-'use strict';
-
 import LoaderDependency from 'webpack/lib/dependencies/LoaderDependency';
 import createControllersModule from './create-controllers-module';
 

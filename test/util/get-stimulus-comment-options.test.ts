@@ -7,8 +7,6 @@
  * file that was distributed with this source code.
  */
 
-'use strict';
-
 import getStimulusCommentOptions from '../../src/util/get-stimulus-comment-options';
 
 describe('getStimulusCommentOptions', () => {

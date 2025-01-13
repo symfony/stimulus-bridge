@@ -14,7 +14,7 @@
  * to allow testing in node.
  */
 
-const path = require('path');
+const path = require('node:path');
 
 module.exports = {
     target: 'node',
