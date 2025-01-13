@@ -38,7 +38,7 @@ function startStimulusApp(context) {
         application.load(definitionsFromContext(context));
     }
     for (const controllerName in symfonyControllers) {
-        if (!symfonyControllers.hasOwnProperty(controllerName)) {
+        if (!Object.prototype.hasOwnProperty.call(symfonyControllers, controllerName)) {
             continue;
         }
         application.register(controllerName, symfonyControllers[controllerName]);

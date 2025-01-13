@@ -30,34 +30,34 @@ function createControllersModule(config) {
     let controllerContents = 'export default {';
     let importStatementContents = '';
     let hasLazyControllers = false;
-    if ('undefined' !== typeof config['placeholder']) {
+    if ('undefined' !== typeof config.placeholder) {
         throw new Error('Your controllers.json file was not found. Be sure to add a Webpack alias from "@symfony/stimulus-bridge/controllers.json" to *your* controllers.json file.');
     }
-    if ('undefined' === typeof config['controllers']) {
+    if ('undefined' === typeof config.controllers) {
         throw new Error('Your Stimulus configuration file (assets/controllers.json) lacks a "controllers" key.');
     }
     let controllerIndex = 0;
     for (const packageName in config.controllers) {
         let packageConfig;
         try {
-            packageConfig = require(packageName + '/package.json');
+            packageConfig = require(`${packageName}/package.json`);
         }
         catch (e) {
             throw new Error(`The file "${packageName}/package.json" could not be found. Try running "yarn install --force".`);
         }
         for (const controllerName in config.controllers[packageName]) {
-            const controllerReference = packageName + '/' + controllerName;
+            const controllerReference = `${packageName}/${controllerName}`;
             if ('undefined' === typeof packageConfig.symfony.controllers[controllerName]) {
-                throw new Error('Controller "' + controllerReference + '" does not exist in the package and cannot be compiled.');
+                throw new Error(`Controller "${controllerReference}" does not exist in the package and cannot be compiled.`);
             }
             const controllerPackageConfig = packageConfig.symfony.controllers[controllerName];
             const controllerUserConfig = config.controllers[packageName][controllerName];
             if (!controllerUserConfig.enabled) {
                 continue;
             }
-            const controllerMain = packageName + '/' + controllerPackageConfig.main;
-            let fetchMode = controllerUserConfig.fetch || 'eager';
-            let moduleValueContents = ``;
+            const controllerMain = `${packageName}/${controllerPackageConfig.main}`;
+            const fetchMode = controllerUserConfig.fetch || 'eager';
+            let moduleValueContents = '';
             if (fetchMode === 'eager') {
                 const controllerNameForVariable = `controller_${controllerIndex++}`;
                 importStatementContents += `import ${controllerNameForVariable} from '${controllerMain}';\n`;
@@ -80,7 +80,7 @@ function createControllersModule(config) {
             controllerContents += `\n  '${controllerNormalizedName}': ${moduleValueContents},`;
             for (const autoimport in controllerUserConfig.autoimport || []) {
                 if (controllerUserConfig.autoimport[autoimport]) {
-                    importStatementContents += "import '" + autoimport + "';\n";
+                    importStatementContents += `import '${autoimport}';\n`;
                 }
             }
         }
