@@ -23,6 +23,29 @@ jobs:
             - name: Run Biome
               run: yarn run ci
 
+    js-dist-current:
+        name: Check for un-built JS dist files
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Install Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 14 # lowest supported version
+
+            - run: yarn install && yarn build
+
+            - name: Check if js dist files are current
+              run: |
+                  if [[ -n $(git status --porcelain) ]]; then
+                    echo "The Git workspace is unclean! Changes detected:"
+                    git status --porcelain
+                    git diff
+                    exit 1
+                  else
+                    echo "The Git workspace is clean. No changes detected."
+                  fi
     tests:
         name: Tests (Node.js ${{ matrix.node-versions }})
         runs-on: ubuntu-latest
