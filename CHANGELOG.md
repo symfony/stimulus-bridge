@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## 4.0.0
+
+### Breaking changes
+
+* Drop support for Node.js <18, by @Kocal in https://github.com/symfony/stimulus-bridge/pull/94 and https://github.com/symfony/stimulus-bridge/pull/98
+  This should not affect most users since previous versions of Node.js are not maintained anymore, and Node.js 18 is in maintenance LTS.
+
+### Features
+
+* Thus having no effects on the `dist/` files, TypeScript `module` is now set to `ESNext`, `moduleResolution` to `NodeNext`, and `target` to `ES2021`, by @Kocal in https://github.com/symfony/stimulus-bridge/pull/99
+
+### Internal
+
+* [CI] Ensure tests are run under multiple Node.js versions by @Kocal in https://github.com/symfony/stimulus-bridge/pull/94
+* [CI] Check for un-built JS dist files by @Kocal in https://github.com/symfony/stimulus-bridge/pull/96
+* Replace ESLint and Prettier by Biome.js by @Kocal in https://github.com/symfony/stimulus-bridge/pull/95
+* Migrate from [Rollup](https://rollupjs.org/) to [Rolldown](https://rolldown.rs/) by @Kocal in https://github.com/symfony/stimulus-bridge/pull/99
+
 ## 3.3.3
 
 * Add missing `@babel/plugin-proposal-class-properties` dev dependency by @Kocal in https://github.com/symfony/stimulus-bridge/pull/92

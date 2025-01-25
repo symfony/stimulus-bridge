@@ -1,49 +1,38 @@
-import { Application } from '@hotwired/stimulus';
-import symfonyControllers from './webpack/loader!@symfony/stimulus-bridge/controllers.json';
+import { Application } from "@hotwired/stimulus";
+import symfonyControllers from "./webpack/loader!@symfony/stimulus-bridge/controllers.json";
 
-/*
-Stimulus Webpack Helpers 1.0.0
-Copyright © 2021 Basecamp, LLC
- */
+//#region node_modules/@hotwired/stimulus-webpack-helpers/dist/stimulus-webpack-helpers.js
 function definitionsFromContext(context) {
-    return context.keys()
-        .map((key) => definitionForModuleWithContextAndKey(context, key))
-        .filter((value) => value);
+	return context.keys().map((key) => definitionForModuleWithContextAndKey(context, key)).filter((value) => value);
 }
 function definitionForModuleWithContextAndKey(context, key) {
-    const identifier = identifierForContextKey(key);
-    if (identifier) {
-        return definitionForModuleAndIdentifier(context(key), identifier);
-    }
+	const identifier = identifierForContextKey(key);
+	if (identifier) return definitionForModuleAndIdentifier(context(key), identifier);
 }
 function definitionForModuleAndIdentifier(module, identifier) {
-    const controllerConstructor = module.default;
-    if (typeof controllerConstructor == "function") {
-        return { identifier, controllerConstructor };
-    }
+	const controllerConstructor = module.default;
+	if (typeof controllerConstructor == "function") return {
+		identifier,
+		controllerConstructor
+	};
 }
 function identifierForContextKey(key) {
-    const logicalName = (key.match(/^(?:\.\/)?(.+)(?:[_-]controller\..+?)$/) || [])[1];
-    if (logicalName) {
-        return logicalName.replace(/_/g, "-").replace(/\//g, "--");
-    }
+	const logicalName = (key.match(/^(?:\.\/)?(.+)(?:[_-]controller\..+?)$/) || [])[1];
+	if (logicalName) return logicalName.replace(/_/g, "-").replace(/\//g, "--");
 }
 
+//#endregion
+//#region src/index.ts
 function startStimulusApp(context) {
-    const application = Application.start();
-    if (process.env.NODE_ENV === 'development') {
-        application.debug = true;
-    }
-    if (context) {
-        application.load(definitionsFromContext(context));
-    }
-    for (const controllerName in symfonyControllers) {
-        if (!Object.prototype.hasOwnProperty.call(symfonyControllers, controllerName)) {
-            continue;
-        }
-        application.register(controllerName, symfonyControllers[controllerName]);
-    }
-    return application;
+	const application = Application.start();
+	application.debug = true;
+	if (context) application.load(definitionsFromContext(context));
+	for (const controllerName in symfonyControllers) {
+		if (!Object.prototype.hasOwnProperty.call(symfonyControllers, controllerName)) continue;
+		application.register(controllerName, symfonyControllers[controllerName]);
+	}
+	return application;
 }
 
+//#endregion
 export { startStimulusApp };
