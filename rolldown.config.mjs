@@ -1,9 +1,8 @@
-import path from 'node:path';
-import commonjs from '@rollup/plugin-commonjs';
-import resolve from '@rollup/plugin-node-resolve';
+import { defineConfig } from 'rolldown'
+import path from "node:path";
 import typescript from '@rollup/plugin-typescript';
 
-export default [
+export default defineConfig([
     /*
      * Main "entry" that exports startStimulusApp
      */
@@ -18,7 +17,7 @@ export default [
             './webpack/loader!@symfony/stimulus-bridge/controllers.json',
             '@hotwired/stimulus',
         ],
-        plugins: [resolve(), typescript()],
+        plugins: [typescript()],
     },
 
     /*
@@ -34,12 +33,7 @@ export default [
             format: 'cjs',
         },
         external: ['webpack/lib/dependencies/LoaderDependency'],
-        plugins: [
-            resolve(),
-            typescript(),
-            // needed to import from cjs modules, like modules from webpack
-            commonjs(),
-        ],
+        plugins: [typescript()],
     },
 
     /*
@@ -54,6 +48,6 @@ export default [
             format: 'cjs',
         },
         external: ['loader-utils', 'schema-utils'],
-        plugins: [resolve(), typescript()],
+        plugins: [typescript()],
     },
-];
+])
