@@ -1,7 +1,7 @@
 import { Application } from "@hotwired/stimulus";
 import symfonyControllers from "./webpack/loader!@symfony/stimulus-bridge/controllers.json";
 
-//#region node_modules/@hotwired/stimulus-webpack-helpers/dist/stimulus-webpack-helpers.js
+//#region node_modules/.pnpm/@hotwired+stimulus-webpack-helpers@1.0.1_@hotwired+stimulus@3.2.2/node_modules/@hotwired/stimulus-webpack-helpers/dist/stimulus-webpack-helpers.js
 function definitionsFromContext(context) {
 	return context.keys().map((key) => definitionForModuleWithContextAndKey(context, key)).filter((value) => value);
 }

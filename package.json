@@ -9,9 +9,10 @@
     "engines": {
         "node": "^18.12.0 || ^20.0.0 || >=22.0"
     },
+    "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0",
     "scripts": {
-        "build": "yarn rolldown -c",
-        "test": "yarn run webpack --config test/webpack.config.js && yarn run jest",
+        "build": "rolldown -c",
+        "test": "webpack --config test/webpack.config.js && jest",
         "check": "biome check",
         "ci": "biome ci"
     },
@@ -51,6 +52,5 @@
         "dist/",
         "controllers.json",
         "lazy-controller-loader.js"
-    ],
-    "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+    ]
 }

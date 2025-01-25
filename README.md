@@ -22,7 +22,7 @@ Symfony Flex recipe that will set up everything for you. Finish by
 running Encore:
 
 ```sh
-yarn encore dev --watch
+npm encore dev --watch
 ```
 
 If you already had Encore installed (and so the recipe did not run), you
@@ -34,7 +34,7 @@ The Webpack Encore recipe usually handles setting up everything you need.
 But you can also do it manually. First, install the bridge:
 
 ```sh
-yarn add @symfony/stimulus-bridge @hotwired/stimulus --dev
+npm add @symfony/stimulus-bridge @hotwired/stimulus --dev
 ```
 
 Next, create an `assets/controllers.json` file: Flex will update
@@ -77,7 +77,7 @@ export const app = startStimulusApp(require.context(
 That's it! Now run Encore:
 
 ```sh
-yarn encore watch
+npm encore watch
 ```
 
 ## Usage: Installing UX Packages
@@ -297,9 +297,3 @@ Uncaught (in promise) TypeError: class constructors must be invoked with 'new'
 The error is caused when an ES5 class tries to "extend" an ES6 class. If the target is not correctly set, 
 TypeScript will transpile the controller to old ES5 code. But Stimulus 3 uses pure ES6 classes. 
 This causes an incompatibility, hence the need to target ES6 explicitly.
-
-## Run tests
-
-```sh
-yarn test
-```

@@ -17,6 +17,7 @@
 * [CI] Check for un-built JS dist files by @Kocal in https://github.com/symfony/stimulus-bridge/pull/96
 * Replace ESLint and Prettier by Biome.js by @Kocal in https://github.com/symfony/stimulus-bridge/pull/95
 * Migrate from [Rollup](https://rollupjs.org/) to [Rolldown](https://rolldown.rs/) by @Kocal in https://github.com/symfony/stimulus-bridge/pull/99
+* Migrate from [Yarn](https://yarnpkg.com/) to [pnpm](https://pnpm.io/) by @Kocal in https://github.com/symfony/stimulus-bridge/pull/108
 
 ## 3.3.3
 
