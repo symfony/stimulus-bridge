@@ -15,16 +15,19 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
+            - uses: pnpm/action-setup@v4
+
             - name: Install Node
               uses: actions/setup-node@v4
               with:
                   node-version: ${{ env.NODE_VERSION_LOWEST_SUPPORTED }} # lowest supported version
+                  cache: 'pnpm'
 
-            - name: Install Yarn Dependencies
-              run: yarn install
+            - name: Install Node.js Dependencies
+              run: pnpm install
 
             - name: Run Biome
-              run: yarn run ci
+              run: pnpm run ci
 
     js-dist-current:
         name: Check for un-built JS dist files
@@ -32,12 +35,15 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
+            - uses: pnpm/action-setup@v4
+
             - name: Install Node
               uses: actions/setup-node@v4
               with:
                   node-version: ${{ env.NODE_VERSION_LOWEST_SUPPORTED }} # lowest supported version
-
-            - run: yarn install && yarn build
+                  cache: 'pnpm'
+                
+            - run: pnpm install && pnpm run build
 
             - name: Check if js dist files are current
               run: |
@@ -60,13 +66,16 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
 
+            - uses: pnpm/action-setup@v4
+
             - name: Node ${{matrix.node-versions}}
               uses: actions/setup-node@v4
               with:
                   node-version: ${{matrix.node-versions}}
+                  cache: 'pnpm'
 
-            - name: Install Yarn Dependencies
-              run: yarn install
+            - name: Install Node.js Dependencies
+              run: pnpm install
 
             - name: Tests
-              run: yarn test
+              run: pnpm run test

@@ -26,7 +26,7 @@ const loader_utils = __toESM(require("loader-utils"));
 const schema_utils = __toESM(require("schema-utils"));
 const node_vm = __toESM(require("node:vm"));
 
-//#region node_modules/acorn/dist/acorn.mjs
+//#region node_modules/.pnpm/acorn@8.14.0/node_modules/acorn/dist/acorn.mjs
 var astralIdentifierCodes = [
 	509,
 	0,
