@@ -56,23 +56,29 @@ jobs:
                     echo "The Git workspace is clean. No changes detected."
                   fi
     tests:
-        name: Tests (Node.js ${{ matrix.node-versions }})
+        name: Tests (Node.js ${{ matrix.node-versions }}, deps ${{ matrix.dependency-version }})
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
             matrix:
                 node-versions: [ '18', '20', '22', '23' ]
+                dependency-version: ['locked', 'highest', 'lowest-direct']
         steps:
             - name: Checkout
               uses: actions/checkout@v4
 
             - uses: pnpm/action-setup@v4
 
+            - name: Configure PNPM resolution mode
+              if: ${{ matrix.dependency-version != 'locked' }}
+              run: |
+                pnpm config set resolution-mode ${{ matrix.dependency-version }}
+                rm -rf pnpm-lock.yaml
+
             - name: Node ${{matrix.node-versions}}
               uses: actions/setup-node@v4
               with:
                   node-version: ${{matrix.node-versions}}
-                  cache: 'pnpm'
 
             - name: Install Node.js Dependencies
               run: pnpm install

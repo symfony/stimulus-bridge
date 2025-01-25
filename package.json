@@ -22,15 +22,14 @@
     "dependencies": {
         "@hotwired/stimulus-webpack-helpers": "^1.0.1",
         "@types/webpack-env": "^1.16.4",
-        "acorn": "^8.0.5",
+        "acorn": "^8.2.0",
         "loader-utils": "^2.0.0",
         "schema-utils": "^3.0.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.15.8",
-        "@babel/plugin-proposal-class-properties": "^7.15.8",
-        "@babel/preset-env": "^7.15.8",
-        "@babel/preset-typescript": "^7.15.0",
+        "@babel/core": "^7.22.0",
+        "@babel/preset-env": "^7.22.0",
+        "@babel/preset-typescript": "^7.22.0",
         "@biomejs/biome": "^1.9.4",
         "@hotwired/stimulus": "^3.0",
         "@rollup/plugin-typescript": "^12.1.2",
@@ -41,8 +40,8 @@
         "rolldown": "^1.0.0-beta.3",
         "tslib": "^2.3.1",
         "typescript": "^4.4.4",
-        "webpack": "^5.11.1",
-        "webpack-cli": "^4.3.0"
+        "webpack": "^5.72",
+        "webpack-cli": "^5.1.4"
     },
     "resolutions": {
         "@types/jest": "^27.0"
