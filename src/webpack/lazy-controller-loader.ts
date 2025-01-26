@@ -24,6 +24,20 @@ const schema = {
     },
 };
 
+function getLoaderOptions(loaderContext: any) {
+    // Webpack 5, when using loader-utils ^3.0.0
+    if (Object.prototype.hasOwnProperty.call(loaderContext, 'getOptions')) {
+        return loaderContext.getOptions();
+    }
+
+    // loader-utils ^2.0.0
+    if (Object.prototype.hasOwnProperty.call(loaderUtils, 'getOptions')) {
+        return loaderUtils.getOptions(loaderContext);
+    }
+
+    throw new Error('Unable to get loader options, please upgrade to "webpack@^5" or downgrade to "loader-utils@^2".');
+}
+
 /**
  * Loader that can make a Stimulus controller lazy.
  *
@@ -56,7 +70,7 @@ export default function (source: string, sourceMap: string) {
         );
     }
 
-    const loaderOptions = loaderUtils.getOptions(this);
+    const loaderOptions = getLoaderOptions(this);
 
     schemaUtils.validate(schema, loaderOptions, {
         name: '@symfony/stimulus-bridge/lazy-controller-loader',

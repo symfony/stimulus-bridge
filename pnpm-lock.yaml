@@ -21,11 +21,11 @@ importers:
         specifier: ^8.2.0
         version: 8.14.0
       loader-utils:
-        specifier: ^2.0.0
+        specifier: ^2.0.0 || ^3.0.0
         version: 2.0.4
       schema-utils:
-        specifier: ^3.0.0
-        version: 3.3.0
+        specifier: ^3.0.0 || ^4.0.0
+        version: 4.3.0
     devDependencies:
       '@babel/core':
         specifier: ^7.22.0

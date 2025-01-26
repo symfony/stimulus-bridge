@@ -5297,12 +5297,17 @@ const schema = {
 		export: { type: "string" }
 	}
 };
+function getLoaderOptions(loaderContext) {
+	if (Object.prototype.hasOwnProperty.call(loaderContext, "getOptions")) return loaderContext.getOptions();
+	if (Object.prototype.hasOwnProperty.call(loader_utils, "getOptions")) return loader_utils.getOptions(loaderContext);
+	throw new Error("Unable to get loader options, please upgrade to \"webpack@^5\" or downgrade to \"loader-utils@^2\".");
+}
 function lazy_controller_loader_default(source, sourceMap) {
 	const { options, errors } = get_stimulus_comment_options_default(source);
 	for (const error of errors) this.emitError(new Error(`Invalid comment found:\n\n    "/* ${error.comment.value.trim()} */".\n\nCheck your syntax.`));
 	const stimulusFetch = typeof options.stimulusFetch !== "undefined" ? options.stimulusFetch : "eager";
 	if (!["eager", "lazy"].includes(stimulusFetch)) this.emitError(new Error(`Invalid value "${stimulusFetch}" found for "stimulusFetch". Allowed values are "lazy" or "eager"`));
-	const loaderOptions = loader_utils.getOptions(this);
+	const loaderOptions = getLoaderOptions(this);
 	schema_utils.validate(schema, loaderOptions, {
 		name: "@symfony/stimulus-bridge/lazy-controller-loader",
 		baseDataPath: "options"

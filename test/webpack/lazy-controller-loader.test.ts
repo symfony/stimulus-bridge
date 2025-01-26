@@ -7,7 +7,11 @@
  * file that was distributed with this source code.
  */
 
+import * as loaderUtils from 'loader-utils';
 import lazyControllerLoader from '../../src/webpack/lazy-controller-loader';
+import { parseQuery } from '../parseQuery';
+
+const isLoaderUtilsV3 = !Object.prototype.hasOwnProperty.call(loaderUtils, 'getOptions');
 
 function callLoader(src: string, startingSourceMap = '', query = '') {
     const loaderThis = {
@@ -23,6 +27,22 @@ function callLoader(src: string, startingSourceMap = '', query = '') {
             this.executedCallback = { error, content, sourceMap };
         },
     };
+
+    // Re-used from https://github.com/webpack/loader-utils/blob/09128d7a9ae08da110180c31fbec11e195a75220/lib/getOptions.js
+    if (isLoaderUtilsV3) {
+        loaderThis.getOptions = () => {
+            if (typeof query === 'string' && query !== '') {
+                return parseQuery(query);
+            }
+
+            if (!query || typeof query !== 'object') {
+                // Not object-like queries are not supported.
+                return {};
+            }
+
+            return query;
+        };
+    }
 
     lazyControllerLoader.call(loaderThis, src, startingSourceMap);
 
