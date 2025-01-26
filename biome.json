@@ -2,7 +2,14 @@
     "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
     "files": {
         "include": ["*.js", "src/**/*.[jt]s", "test/**/*.[jt]s"],
-        "ignore": ["**/package.json", "**/node_modules", "dist/**", "test/dist/**", "test/fixtures/**/dist/**"]
+        "ignore": [
+            "**/package.json",
+            "**/node_modules",
+            "dist/**",
+            "test/dist/**",
+            "test/fixtures/**/dist/**",
+            "test/parseQuery.ts"
+        ]
     },
     "formatter": {
         "lineWidth": 120,
