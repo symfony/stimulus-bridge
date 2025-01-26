@@ -9,12 +9,14 @@
 
 ### Features
 
-* Thus having no effects on the `dist/` files, TypeScript `module` is now set to `ESNext`, `moduleResolution` to `NodeNext`, and `target` to `ES2021`, by @Kocal in https://github.com/symfony/stimulus-bridge/pull/99
+* Thus having no effects on the `dist/` files, TypeScript `module` is now set to `ESNext`, `moduleResolution` to `NodeNext`, and `target` to `ES2021` by @Kocal in https://github.com/symfony/stimulus-bridge/pull/99
+* Upgrade minimum supported `acorn` version to 8.2.0 by @Kocal in https://github.com/symfony/stimulus-bridge/pull/110
 
 ### Internal
 
 * [CI] Ensure tests are run under multiple Node.js versions by @Kocal in https://github.com/symfony/stimulus-bridge/pull/94
-* [CI] Check for un-built JS dist files by @Kocal in https://github.com/symfony/stimulus-bridge/pull/96
+* [CI] Check for un-built JS dist files by, @Kocal in https://github.com/symfony/stimulus-bridge/pull/96
+* [CI] Run tests for lowest/locked/highest dependency versions by @Kocal in https://github.com/symfony/stimulus-bridge/pull/111
 * Replace ESLint and Prettier by Biome.js by @Kocal in https://github.com/symfony/stimulus-bridge/pull/95
 * Migrate from [Rollup](https://rollupjs.org/) to [Rolldown](https://rolldown.rs/) by @Kocal in https://github.com/symfony/stimulus-bridge/pull/99
 * Migrate from [Yarn](https://yarnpkg.com/) to [pnpm](https://pnpm.io/) by @Kocal in https://github.com/symfony/stimulus-bridge/pull/108
