@@ -50,6 +50,7 @@
         "src/",
         "dist/",
         "controllers.json",
-        "lazy-controller-loader.js"
+        "lazy-controller-loader.js",
+        "lazy-controller-loader.mjs"
     ]
 }

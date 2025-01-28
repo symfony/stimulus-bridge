@@ -28,10 +28,16 @@ export default defineConfig([
      */
     {
         input: 'src/webpack/loader.ts',
-        output: {
-            file: path.join('dist', 'webpack', 'loader.js'),
-            format: 'cjs',
-        },
+        output: [
+            {
+                file: path.join('dist', 'webpack', 'loader.js'),
+                format: 'cjs',
+            },
+            {
+                file: path.join('dist', 'webpack', 'loader.mjs'),
+                format: 'esm',
+            },
+        ],
         external: ['webpack/lib/dependencies/LoaderDependency'],
         plugins: [typescript()],
     },
@@ -43,10 +49,16 @@ export default defineConfig([
      */
     {
         input: 'src/webpack/lazy-controller-loader.ts',
-        output: {
-            file: path.join('dist', 'webpack', 'lazy-controller-loader.js'),
-            format: 'cjs',
-        },
+        output: [
+            {
+                file: path.join('dist', 'webpack', 'lazy-controller-loader.js'),
+                format: 'cjs',
+            },
+            {
+                file: path.join('dist', 'webpack', 'lazy-controller-loader.mjs'),
+                format: 'esm',
+            },
+        ],
         external: ['loader-utils', 'schema-utils'],
         plugins: [typescript()],
     },
