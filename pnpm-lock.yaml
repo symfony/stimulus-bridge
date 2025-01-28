@@ -17,9 +17,6 @@ importers:
       '@types/webpack-env':
         specifier: ^1.16.4
         version: 1.18.6
-      acorn:
-        specifier: ^8.2.0
-        version: 8.14.0
       loader-utils:
         specifier: ^2.0.0 || ^3.0.0
         version: 2.0.4
@@ -51,6 +48,9 @@ importers:
       '@symfony/stimulus-testing':
         specifier: ^2.0.0
         version: 2.0.1(@babel/core@7.26.7)
+      acorn:
+        specifier: ^8.2.0
+        version: 8.14.0
       babel-jest:
         specifier: ^27.3.1
         version: 27.5.1(@babel/core@7.26.7)
@@ -5805,11 +5805,7 @@ snapshots:
       pretty-format: 26.6.2
       throat: 5.0.0
     transitivePeerDependencies:
-      - bufferutil
-      - canvas
       - supports-color
-      - ts-node
-      - utf-8-validate
 
   jest-jasmine2@27.5.1:
     dependencies:

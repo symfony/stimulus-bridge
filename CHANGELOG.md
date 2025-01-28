@@ -12,6 +12,7 @@
 * Thus having no effects on the `dist/` files, TypeScript `module` is now set to `ESNext`, `moduleResolution` to `NodeNext`, and `target` to `ES2021` by @Kocal in https://github.com/symfony/stimulus-bridge/pull/99
 * Upgrade minimum supported `acorn` version to 8.2.0 by @Kocal in https://github.com/symfony/stimulus-bridge/pull/110
 * Add support for `loader-utils@^3.0.0` and `schema-utils@^4.0.0` by @Kocal in https://github.com/symfony/stimulus-bridge/pull/111
+* Move `acorn` dependency to devDependency, as it is already bundled in dist files, by @Kocal in https://github.com/symfony/stimulus-bridge/pull/114
 
 ### Internal
 
