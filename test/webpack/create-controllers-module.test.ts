@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+import { describe, expect, it } from 'vitest';
 import createControllersModule from '../../src/webpack/create-controllers-module';
 
 describe('createControllersModule', () => {

@@ -12,7 +12,8 @@
     "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0",
     "scripts": {
         "build": "rolldown -c",
-        "test": "webpack --config test/webpack.config.js && jest",
+        "test": "webpack --config test/webpack.config.js && vitest run",
+        "test:watch": "webpack --config test/webpack.config.js && vitest",
         "check": "biome check",
         "ci": "biome ci"
     },
@@ -27,24 +28,24 @@
     },
     "devDependencies": {
         "@babel/core": "^7.22.0",
+        "@babel/parser": "^7.26.7",
         "@babel/preset-env": "^7.22.0",
         "@babel/preset-typescript": "^7.22.0",
+        "@babel/types": "^7.26.7",
         "@biomejs/biome": "^1.9.4",
         "@hotwired/stimulus": "^3.0",
         "@rollup/plugin-typescript": "^12.1.2",
         "@symfony/mock-module": "file:test/fixtures/module",
-        "@symfony/stimulus-testing": "^2.0.0",
+        "@testing-library/jest-dom": "^6.6.3",
         "acorn": "^8.2.0",
-        "babel-jest": "^27.3.1",
-        "jest": "^27.3.1",
+        "jsdom": "^26.0.0",
+        "json5": "^2.2.3",
         "rolldown": "^1.0.0-beta.3",
         "tslib": "^2.3.1",
         "typescript": "^4.4.4",
+        "vitest": "^3.0.4",
         "webpack": "^5.72",
         "webpack-cli": "^5.1.4"
-    },
-    "resolutions": {
-        "@types/jest": "^27.0"
     },
     "files": [
         "src/",
