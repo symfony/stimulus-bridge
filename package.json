@@ -27,11 +27,6 @@
         "schema-utils": "^3.0.0 || ^4.0.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.22.0",
-        "@babel/parser": "^7.26.7",
-        "@babel/preset-env": "^7.22.0",
-        "@babel/preset-typescript": "^7.22.0",
-        "@babel/types": "^7.26.7",
         "@biomejs/biome": "^1.9.4",
         "@hotwired/stimulus": "^3.0",
         "@rollup/plugin-typescript": "^12.1.2",
