@@ -297,3 +297,7 @@ Uncaught (in promise) TypeError: class constructors must be invoked with 'new'
 The error is caused when an ES5 class tries to "extend" an ES6 class. If the target is not correctly set, 
 TypeScript will transpile the controller to old ES5 code. But Stimulus 3 uses pure ES6 classes. 
 This causes an incompatibility, hence the need to target ES6 explicitly.
+
+## Contributing
+
+Thank you for considering contributing to the Symfony's Stimulus Bridge! You can find the [contribution guide here](./CONTRIBUTING.md).
