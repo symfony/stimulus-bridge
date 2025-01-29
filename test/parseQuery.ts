@@ -1,4 +1,3 @@
-// biome-ignore file: d
 // This file is copied from https://github.com/symfony/stimulus-bridge/blob/main/src/webpack/lazy-controller-loader.ts
 // to keep "emulated" call to loader working when using loader-utils@^3.0.0.
 

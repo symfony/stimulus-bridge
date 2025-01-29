@@ -9,6 +9,7 @@
 
 import { parse } from '@babel/parser';
 import { isNode } from '@babel/types';
+import { describe, expect, it } from 'vitest';
 import generateLazyController from '../../src/webpack/generate-lazy-controller';
 
 const wrapLazyController = (controllerString: string): string => {

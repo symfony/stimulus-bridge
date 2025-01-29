@@ -22,6 +22,7 @@
 * Replace ESLint and Prettier by Biome.js by @Kocal in https://github.com/symfony/stimulus-bridge/pull/95
 * Migrate from [Rollup](https://rollupjs.org/) to [Rolldown](https://rolldown.rs/) by @Kocal in https://github.com/symfony/stimulus-bridge/pull/99
 * Migrate from [Yarn](https://yarnpkg.com/) to [pnpm](https://pnpm.io/) by @Kocal in https://github.com/symfony/stimulus-bridge/pull/108
+* Migrate from [Jest](https://jestjs.io/) to [Vitest](https://vitest.dev/) by @Kocal in https://github.com/symfony/stimulus-bridge/pull/115
 
 ## 3.3.3
 

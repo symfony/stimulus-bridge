@@ -8,6 +8,7 @@
  */
 
 import * as loaderUtils from 'loader-utils';
+import { describe, expect, it } from 'vitest';
 import lazyControllerLoader from '../../src/webpack/lazy-controller-loader';
 import { parseQuery } from '../parseQuery';
 
