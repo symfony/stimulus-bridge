@@ -7,8 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import { parse } from '@babel/parser';
-import { isNode } from '@babel/types';
+import { parse } from 'acorn';
 import { describe, expect, it } from 'vitest';
 import generateLazyController from '../../src/webpack/generate-lazy-controller';
 
@@ -24,13 +23,16 @@ const wrapLazyController = (controllerString: string): string => {
 describe('generateLazyControllerModule', () => {
     describe('generateLazyController()', () => {
         it('must return a functional ES6 class', () => {
+            expect.assertions(3);
+
             const controllerCode = wrapLazyController(
                 generateLazyController('@symfony/some-module/dist/controller.js', 0)
             );
             const result = parse(controllerCode, {
+                ecmaVersion: 2020,
                 sourceType: 'module',
             });
-            expect(isNode(result)).toBeTruthy();
+            expect(result.constructor.name).toBe('Node');
 
             // biome-ignore lint/security/noGlobalEval: We need to eval the code to test it
             const lazyControllerClass = eval(`${controllerCode}`);
@@ -40,11 +42,14 @@ describe('generateLazyControllerModule', () => {
         });
 
         it('must return a functional ES6 class on Windows', () => {
+            expect.assertions(2);
+
             const controllerCode = wrapLazyController(generateLazyController('C:\\\\path\\to\\file.js', 0));
             const result = parse(controllerCode, {
+                ecmaVersion: 2020,
                 sourceType: 'module',
             });
-            expect(isNode(result)).toBeTruthy();
+            expect(result.constructor.name).toBe('Node');
             /*
              * This looks insane. We're creating a string that looks like this:
              *      C:\\\\path\\to\\file.js
@@ -56,13 +61,17 @@ describe('generateLazyControllerModule', () => {
         });
 
         it('must use the correct, named export', () => {
+            expect.assertions(2);
+
             const controllerCode = wrapLazyController(
                 generateLazyController('@symfony/some-module/dist/controller.js', 0, 'CustomController')
             );
             const result = parse(controllerCode, {
+                ecmaVersion: 2020,
                 sourceType: 'module',
             });
-            expect(isNode(result)).toBeTruthy();
+            expect(result.constructor.name).toBe('Node');
+
             expect(controllerCode).toContain('this.application.register(this.identifier, controller.CustomController)');
         });
     });
