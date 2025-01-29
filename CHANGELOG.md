@@ -24,6 +24,7 @@
 * Migrate from [Yarn](https://yarnpkg.com/) to [pnpm](https://pnpm.io/) by @Kocal in https://github.com/symfony/stimulus-bridge/pull/108
 * Migrate from [Jest](https://jestjs.io/) to [Vitest](https://vitest.dev/) by @Kocal in https://github.com/symfony/stimulus-bridge/pull/115
 * Migrate or remove [Babel](https://babeljs.io/) in favor of [Acorn](https://github.com/acornjs/acorn) by @Kocal in https://github.com/symfony/stimulus-bridge/pull/116
+* Add a contribution guide by @Kocal in https://github.com/symfony/stimulus-bridge/pull/117
 
 ## 3.3.3
 
