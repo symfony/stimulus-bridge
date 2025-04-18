@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 4.0.1
+
+* Fix `application.debug = true` by keeping `process.env.NODE_ENV` check in dist files, see https://github.com/symfony/stimulus-bridge/pull/121
+
 ## 4.0.0
 
 ### Breaking changes

@@ -25,7 +25,7 @@ function identifierForContextKey(key) {
 //#region src/index.ts
 function startStimulusApp(context) {
 	const application = Application.start();
-	application.debug = true;
+	if (process.env.NODE_ENV === "development") application.debug = true;
 	if (context) application.load(definitionsFromContext(context));
 	for (const controllerName in symfonyControllers) {
 		if (!Object.prototype.hasOwnProperty.call(symfonyControllers, controllerName)) continue;
