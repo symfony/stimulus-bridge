@@ -18,6 +18,10 @@ export default defineConfig([
             '@hotwired/stimulus',
         ],
         plugins: [typescript()],
+        define: {
+            // Keep `process.env.NODE_ENV` as a string, so it can be replaced by Webpack when user builds its app
+            'process.env.NODE_ENV': 'process.env.NODE_ENV',
+        },
     },
 
     /*
