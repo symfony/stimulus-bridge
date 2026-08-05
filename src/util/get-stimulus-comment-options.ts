@@ -7,7 +7,6 @@
  * file that was distributed with this source code.
  */
 
-import vm from 'node:vm';
 import { type Comment, parse } from 'acorn';
 
 const stimulusCommentRegExp = new RegExp(/(^|\W)stimulus[A-Z]{1,}[A-Za-z]{1,}:/);
@@ -26,6 +25,44 @@ function getCommentsFromSource(source: string): Comment[] {
     });
 
     return comments;
+}
+
+// Parse the options as an object expression and keep only literal values; the comment is never evaluated.
+function parseCommentOptions(value: string): Record<string, unknown> {
+    const program = parse(`({${value}})`, { ecmaVersion: 2022 });
+    const statement = program.body[0];
+    if (
+        program.body.length !== 1 ||
+        statement.type !== 'ExpressionStatement' ||
+        statement.expression.type !== 'ObjectExpression'
+    ) {
+        throw new Error('Expected a list of "key: value" options');
+    }
+
+    const options: Record<string, unknown> = {};
+    for (const property of statement.expression.properties) {
+        if (property.type !== 'Property' || property.computed) {
+            throw new Error('Unexpected option');
+        }
+
+        const key =
+            property.key.type === 'Identifier'
+                ? property.key.name
+                : property.key.type === 'Literal'
+                  ? String(property.key.value)
+                  : null;
+        if (key === null) {
+            throw new Error('Unexpected option name');
+        }
+
+        if (property.value.type !== 'Literal') {
+            throw new Error(`Option "${key}" must be a literal value`);
+        }
+
+        options[key] = property.value.value;
+    }
+
+    return options;
 }
 
 /**
@@ -48,10 +85,8 @@ export default function (source: string) {
     for (const comment of comments) {
         const { value } = comment;
         if (value && stimulusCommentRegExp.test(value)) {
-            // try compile only if stimulus options comment is present
             try {
-                const val = vm.runInNewContext(`(function(){return {${value}};})()`);
-                Object.assign(options, val);
+                Object.assign(options, parseCommentOptions(value));
             } catch (e: any) {
                 e.comment = comment;
                 errors.push(e);

@@ -24,7 +24,6 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 //#endregion
 const loader_utils = __toESM(require("loader-utils"));
 const schema_utils = __toESM(require("schema-utils"));
-const node_vm = __toESM(require("node:vm"));
 
 //#region node_modules/.pnpm/acorn@8.14.0/node_modules/acorn/dist/acorn.mjs
 var astralIdentifierCodes = [
@@ -5240,6 +5239,20 @@ function getCommentsFromSource(source) {
 	});
 	return comments;
 }
+function parseCommentOptions(value) {
+	const program = parse(`({${value}})`, { ecmaVersion: 2022 });
+	const statement = program.body[0];
+	if (program.body.length !== 1 || statement.type !== "ExpressionStatement" || statement.expression.type !== "ObjectExpression") throw new Error("Expected a list of \"key: value\" options");
+	const options = {};
+	for (const property of statement.expression.properties) {
+		if (property.type !== "Property" || property.computed) throw new Error("Unexpected option");
+		const key = property.key.type === "Identifier" ? property.key.name : property.key.type === "Literal" ? String(property.key.value) : null;
+		if (key === null) throw new Error("Unexpected option name");
+		if (property.value.type !== "Literal") throw new Error(`Option "${key}" must be a literal value`);
+		options[key] = property.value.value;
+	}
+	return options;
+}
 function get_stimulus_comment_options_default(source) {
 	let comments = [];
 	try {
@@ -5253,8 +5266,7 @@ function get_stimulus_comment_options_default(source) {
 	for (const comment of comments) {
 		const { value } = comment;
 		if (value && stimulusCommentRegExp.test(value)) try {
-			const val = node_vm.default.runInNewContext(`(function(){return {${value}};})()`);
-			Object.assign(options, val);
+			Object.assign(options, parseCommentOptions(value));
 		} catch (e) {
 			e.comment = comment;
 			errors.push(e);

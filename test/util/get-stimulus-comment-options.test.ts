@@ -41,6 +41,14 @@ describe('getStimulusCommentOptions', () => {
         });
     });
 
+    it('rejects a comment value that is not a plain string literal without evaluating it', () => {
+        const src =
+            '/* stimulusFetch: (this.constructor.constructor("return process")(), \'eager\') */ export default class extends Controller {}';
+        const { options, errors } = getStimulusCommentOptions(src);
+        expect(options).toEqual({});
+        expect(errors).toHaveLength(1);
+    });
+
     it('parses source with static properties', () => {
         const src = '/* stimulusFetch: "lazy" */ export default class extends Controller { static targets = []; }';
         expect(getStimulusCommentOptions(src)).toEqual({
