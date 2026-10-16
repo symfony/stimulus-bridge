@@ -7,7 +7,6 @@
  * file that was distributed with this source code.
  */
 
-import LoaderDependency from 'webpack/lib/dependencies/LoaderDependency';
 import createControllersModule from './create-controllers-module';
 
 /**
@@ -27,7 +26,10 @@ export default function (source: string) {
      * executing after our loader. This is a workaround from WebpackEncore.
      */
     const requiredType = 'javascript/auto';
-    const factory = this._compilation.dependencyFactories.get(LoaderDependency);
+    // webpack < 5.55 has no compilation.params
+    const factory =
+        this._compilation.params?.normalModuleFactory ??
+        this._compilation.dependencyFactories.get(require('webpack/lib/dependencies/LoaderDependency'));
     if (factory === undefined) {
         throw new Error('Could not retrieve module factory for type LoaderDependency');
     }

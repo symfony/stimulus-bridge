@@ -1,28 +1,4 @@
 "use strict";
-//#region rolldown:runtime
-var __create = Object.create;
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __copyProps = (to, from, except, desc) => {
-	if (from && typeof from === "object" || typeof from === "function") for (var keys = __getOwnPropNames(from), i = 0, n = keys.length, key; i < n; i++) {
-		key = keys[i];
-		if (!__hasOwnProp.call(to, key) && key !== except) __defProp(to, key, {
-			get: ((k) => from[k]).bind(null, key),
-			enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable
-		});
-	}
-	return to;
-};
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", {
-	value: mod,
-	enumerable: true
-}) : target, mod));
-
-//#endregion
-const webpack_lib_dependencies_LoaderDependency = __toESM(require("webpack/lib/dependencies/LoaderDependency"));
 
 //#region src/webpack/generate-lazy-controller.ts
 function generate_lazy_controller_default(controllerPath, indentationSpaces, exportName = "default") {
@@ -96,7 +72,7 @@ function createControllersModule(config) {
 //#region src/webpack/loader.ts
 function loader_default(source) {
 	const requiredType = "javascript/auto";
-	const factory = this._compilation.dependencyFactories.get(webpack_lib_dependencies_LoaderDependency.default);
+	const factory = this._compilation.params?.normalModuleFactory ?? this._compilation.dependencyFactories.get(require("webpack/lib/dependencies/LoaderDependency"));
 	if (factory === undefined) throw new Error("Could not retrieve module factory for type LoaderDependency");
 	this._module.type = requiredType;
 	this._module.generator = factory.getGenerator(requiredType);
