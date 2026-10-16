@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 4.0.2
+
+- Fix the `controllers.json` loader with webpack 5.112
+
 ## 4.0.1
 
 * Fix `application.debug = true` by keeping `process.env.NODE_ENV` check in dist files, see https://github.com/symfony/stimulus-bridge/pull/121
