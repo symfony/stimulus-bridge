@@ -28,7 +28,9 @@ export default function createControllersModule(config: any) {
     for (const packageName in config.controllers) {
         let packageConfig: unknown;
         try {
-            packageConfig = require(`${packageName}/package.json`);
+            // Parsed as JSON, since the "exports" field of a package can map its package.json to a script
+            const packageJson = require('node:fs').readFileSync(require.resolve(`${packageName}/package.json`), 'utf8');
+            packageConfig = JSON.parse(packageJson);
         } catch (e) {
             throw new Error(
                 `The file "${packageName}/package.json" could not be found. Try running "yarn install --force".`

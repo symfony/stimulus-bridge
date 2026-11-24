@@ -30,6 +30,7 @@
         "@biomejs/biome": "^1.9.4",
         "@hotwired/stimulus": "^3.0",
         "@rollup/plugin-typescript": "^12.1.2",
+        "@symfony/mock-exports-module": "file:test/fixtures/exports-module",
         "@symfony/mock-module": "file:test/fixtures/module",
         "@testing-library/jest-dom": "^6.6.3",
         "acorn": "^8.2.0",

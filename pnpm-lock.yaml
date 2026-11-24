@@ -30,6 +30,9 @@ importers:
       '@rollup/plugin-typescript':
         specifier: ^12.1.2
         version: 12.1.2(rollup@4.32.1)(tslib@2.8.1)(typescript@4.9.5)
+      '@symfony/mock-exports-module':
+        specifier: file:test/fixtures/exports-module
+        version: file:test/fixtures/exports-module
       '@symfony/mock-module':
         specifier: file:test/fixtures/module
         version: file:test/fixtures/module
@@ -531,6 +534,9 @@ packages:
     resolution: {integrity: sha512-ar80GhdZb4DgmW3myIS9nRFYcpJRSME8iqWgzH2i44u+IdrzmiXVxeFnExQ5v4JYUSpg94bWjevMG8JHf1Da5Q==}
     cpu: [x64]
     os: [win32]
+
+  '@symfony/mock-exports-module@file:test/fixtures/exports-module':
+    resolution: {directory: test/fixtures/exports-module, type: directory}
 
   '@symfony/mock-module@file:test/fixtures/module':
     resolution: {directory: test/fixtures/module, type: directory}
@@ -1793,6 +1799,8 @@ snapshots:
 
   '@rollup/rollup-win32-x64-msvc@4.32.1':
     optional: true
+
+  '@symfony/mock-exports-module@file:test/fixtures/exports-module': {}
 
   '@symfony/mock-module@file:test/fixtures/module': {}
 

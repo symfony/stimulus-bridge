@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 4.0.3
+
+- Read the `package.json` file of controller packages as JSON in the `controllers.json` loader
+
 ## 4.0.2
 
 - Fix the `controllers.json` loader with webpack 5.112

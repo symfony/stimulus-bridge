@@ -33,7 +33,8 @@ function createControllersModule(config) {
 	for (const packageName in config.controllers) {
 		let packageConfig;
 		try {
-			packageConfig = require(`${packageName}/package.json`);
+			const packageJson = require("node:fs").readFileSync(require.resolve(`${packageName}/package.json`), "utf8");
+			packageConfig = JSON.parse(packageJson);
 		} catch (e) {
 			throw new Error(`The file "${packageName}/package.json" could not be found. Try running "yarn install --force".`);
 		}

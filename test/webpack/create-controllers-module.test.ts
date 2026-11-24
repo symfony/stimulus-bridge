@@ -98,4 +98,14 @@ export default {
             );
         });
     });
+
+    describe('exports-module.json', () => {
+        it('must not run a script that the package exports as its package.json', () => {
+            const config = require('../fixtures/exports-module.json');
+            expect(() => createControllersModule(config)).toThrow(
+                'The file "@symfony/mock-exports-module/package.json" could not be found.'
+            );
+            expect((globalThis as any).mockExportsModuleRan).toBeUndefined();
+        });
+    });
 });
